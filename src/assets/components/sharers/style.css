@@ -1,0 +1,19 @@
+.sharer-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7em;
+    cursor: pointer;
+    font-size: 1em;
+    transition: var(--t-fast);
+}
+.sharer-icon:hover {
+    color: red !important;
+    box-shadow: 2px 1px 2px #00000050;
+}
+.bg-disclaimer {
+    background-color: silver;
+}
+.text-disclaimer {
+    color: dimgray;
+}

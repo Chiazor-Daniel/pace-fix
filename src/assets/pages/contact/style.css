@@ -1,0 +1,22 @@
+.contact-form .form-control {
+    margin-bottom: 10px;
+}
+.dbox .icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: maroon;
+    color: white;
+    margin: 0 auto 20px;
+}
+
+.dbox p span {
+    font-weight: bold;
+    color: dimgray;
+    display: block;
+}
+
+.dbox p a {
+    text-decoration: none;
+    color: maroon;
+}

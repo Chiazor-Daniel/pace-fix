@@ -1,0 +1,42 @@
+User-agent: *
+Disallow: 
+
+Sitemap: https://pacesetterfrontier.com/sitemap.xml
+
+# Allow crawling of specific directories
+Allow: /about-us/
+Allow: /category/
+Allow: /contact-us/
+Allow: /post/
+Allow: /search/
+
+# Disallow crawling of specific directories
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+
+# Allow Googlebot to crawl all pages
+User-agent: Googlebot
+Allow: /
+
+# Allow Bingbot to crawl all pages
+User-agent: Bingbot
+Allow: /
+
+# Allow Yandex to crawl all pages
+User-agent: Yandex
+Allow: /
+
+# Allow Baidu to crawl all pages
+User-agent: Baiduspider
+Allow: /
+
+# Allow Pinterest to crawl all pages
+User-agent: Pinterestbot
+Allow: /
+
+# Allow Facebook to crawl all pages
+User-agent: Facebot
+Allow: /
+User-agent: Facebookbot
+Allow: /
