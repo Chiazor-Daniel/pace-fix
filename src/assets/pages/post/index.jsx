@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Head from 'next/head';
 
 import { Layout } from ".."
 import SideBar from "./SideBar"
@@ -184,6 +185,17 @@ const PostPage = () => {
 
   return (
     <Layout>
+      <Head>
+        <title>{og_title}</title>
+        <meta property="og:title" content={og_title} />
+        <meta property="og:description" content={og_description} />
+        <meta property="og:image" content={og_image[0].url} />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={og_title} />
+        <meta name="twitter:description" content={og_description} />
+        <meta name="twitter:image" content={og_image[0].url} />
+      </Head>
       <SocialPreviews
         name={twitter_creator}
         type={twitter_card}
