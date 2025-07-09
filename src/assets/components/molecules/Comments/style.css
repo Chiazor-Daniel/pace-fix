@@ -1,0 +1,19 @@
+.comment-form {
+    background-color: #ddd;
+    padding: 2em;
+    border-radius: 7px;
+}
+.comment-form sup {
+    color: darkred;
+    font-weight: bold;
+}
+.comment-form label {
+    margin: 10px 0 0;
+}
+.comment-form textarea {
+    resize: none;
+    height: 150px !important;
+}
+.spin-icon {
+    animation: App-logo-spin 1s linear infinite;
+}

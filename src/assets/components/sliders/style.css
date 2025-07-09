@@ -1,0 +1,9 @@
+.latest-slider .slick-prev, .latest-slider .slick-next {
+    position: absolute;
+    top: -5px;
+}
+.latest-light .slick-prev:before, .latest-light .slick-next:before{
+    background-color: transparent;
+    color: white !important;
+    font-size: 22px !important;
+}

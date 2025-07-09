@@ -1,0 +1,13 @@
+.btn-whatsapp {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #25d366;
+    border-color: #25d366;
+    transition: var(--t-med);
+}
+.btn-whatsapp:hover {
+    background-color: #1ebe57;
+    border-color: #1ebe57;
+    transform: scale(1.1);
+}

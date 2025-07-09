@@ -1,0 +1,12 @@
+#my-post-listing{
+    overflow-y: auto;
+}
+.w-75-lg {
+    width: 75% !important;
+}
+
+@media screen and (max-width: 700px) {
+    .w-75-lg {
+        width: 100% !important;
+    }
+}
