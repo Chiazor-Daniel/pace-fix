@@ -32,14 +32,16 @@ const Adverts = ({ index, hideLabel = false }) => {
             <small>Advertisement</small>
           </b>
         </p>
-        <Image
-          src={AltImage}
-          alt={`Advert ${index}`}
-          width={600}
-          height={400}
-          className={"img-thumbnail rounded advert-img-max-height"}
-          style={{ objectFit: "cover" }}
-        />
+        <a href="#" className="d-block">
+          <Image
+            src={AltImage}
+            alt={`Advert ${index}`}
+            width={600}
+            height={400}
+            className={"img-thumbnail rounded advert-img-max-height"}
+            style={{ objectFit: "cover" }}
+          />
+        </a>
       </div>
     )
   }
@@ -51,14 +53,34 @@ const Adverts = ({ index, hideLabel = false }) => {
           <small>Advertisement</small>
         </b>
       </p>
-      <Image
-        src={image}
-        alt={`Advert ${index}`}
-        width={600}
-        height={400}
-        className={"img-thumbnail rounded advert-img-max-height"}
-        style={{ objectFit: "cover" }}
-      />
+      {data[index] ? (
+        <a 
+          href={data[index].link} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="d-block"
+        >
+          <Image
+            src={image}
+            alt={`Advert ${index}`}
+            width={600}
+            height={400}
+            className={"img-thumbnail rounded advert-img-max-height"}
+            style={{ objectFit: "cover" }}
+          />
+        </a>
+      ) : (
+        <div className="d-block">
+          <Image
+            src={image}
+            alt={`Advert ${index}`}
+            width={600}
+            height={400}
+            className={"img-thumbnail rounded advert-img-max-height"}
+            style={{ objectFit: "cover" }}
+          />
+        </div>
+      )}
     </div>
   )
 }

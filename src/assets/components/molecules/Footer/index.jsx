@@ -17,7 +17,7 @@ const Footer = () => {
 
             <p className="text-center mt-5">
               <Link href={"/"}>
-                <img src={"/down-logo.png"} alt="Pacesetter Bottom Logo" width={300} />
+                <img src={"/png.png"} alt="Pacesetter Bottom Logo" width={300} />
               </Link>
             </p>
 

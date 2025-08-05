@@ -35,14 +35,15 @@ export const VerticalSegment = ({
   const { updatePostItem } = usePostContext()
   const [views, setViews] = useState(0)
   useEffect(() => {
-    const savedViews = localStorage.getItem(`post_views_${id}`)
-    if (savedViews) {
-      setViews(Number.parseInt(savedViews))
-    } else {
-      const randomViews = Math.floor(Math.random() * 4950) + 50
-      setViews(randomViews)
-      localStorage.setItem(`post_views_${id}`, randomViews.toString())
-    }
+    if (!id) return;
+    fetch(`/api/views/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        if (typeof data.views === 'number') setViews(data.views);
+      })
+      .catch(err => {
+        console.error('Failed to fetch post views:', err);
+      });
   }, [id])
 
   const handlePostClick = () => {
@@ -72,7 +73,7 @@ export const VerticalSegment = ({
         dangerouslySetInnerHTML={{ __html: title.rendered }}
       />
       <div style={{ maxWidth: 350 }} className="text-muted">
-        <PostViews views={views} />
+        {/* <PostViews views={views} /> */}
         <AuthorTime
           date={date}
           author={author}
@@ -98,14 +99,15 @@ export const TextFirstSegment = ({ yoast_head_json, title, excerpt, date, item, 
   const { updatePostItem } = usePostContext()
   const [views, setViews] = useState(0)
   useEffect(() => {
-    const savedViews = localStorage.getItem(`post_views_${id}`)
-    if (savedViews) {
-      setViews(Number.parseInt(savedViews))
-    } else {
-      const randomViews = Math.floor(Math.random() * 4950) + 50
-      setViews(randomViews)
-      localStorage.setItem(`post_views_${id}`, randomViews.toString())
-    }
+    if (!id) return;
+    fetch(`/api/views/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        if (typeof data.views === 'number') setViews(data.views);
+      })
+      .catch(err => {
+        console.error('Failed to fetch post views:', err);
+      });
   }, [id])
 
   const handlePostClick = () => {
@@ -126,7 +128,7 @@ export const TextFirstSegment = ({ yoast_head_json, title, excerpt, date, item, 
           dangerouslySetInnerHTML={{ __html: title.rendered }}
         />
         <div className="my-3">
-          <PostViews views={views} />
+          {/* <PostViews views={views} /> */}
           <AuthorTime
             date={date} 
             comments={2}
@@ -154,14 +156,15 @@ export const LittlePieceSegment = ({ title, yoast_head_json, item, id, slug }) =
   const { updatePostItem } = usePostContext()
   const [views, setViews] = useState(0)
   useEffect(() => {
-    const savedViews = localStorage.getItem(`post_views_${id}`)
-    if (savedViews) {
-      setViews(Number.parseInt(savedViews))
-    } else {
-      const randomViews = Math.floor(Math.random() * 4950) + 50
-      setViews(randomViews)
-      localStorage.setItem(`post_views_${id}`, randomViews.toString())
-    }
+    if (!id) return;
+    fetch(`/api/views/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        if (typeof data.views === 'number') setViews(data.views);
+      })
+      .catch(err => {
+        console.error('Failed to fetch post views:', err);
+      });
   }, [id])
 
   const handlePostClick = () => {
@@ -190,7 +193,7 @@ export const LittlePieceSegment = ({ title, yoast_head_json, item, id, slug }) =
         </div>
         <div className="ms-2 w-75 fs-12 fw-bold">
           <span dangerouslySetInnerHTML={{ __html: title.rendered }} className="pointer" onClick={handlePostClick} />
-          <ViewComment />
+          <ViewComment views={views} />
         </div>
       </div>
     </>

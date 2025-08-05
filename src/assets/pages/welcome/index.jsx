@@ -24,13 +24,13 @@ import { Adverts } from "../../components"
 
 const Welcome = () => (
   <Layout>
-    <Container fluid className="px-0">
+    <div className="container-fluid px-0">
       <HeroSlider />
-    </Container>
+    </div>
 
-    <Container className="my-5">
+    <div className="my-5">
       <div className="row">
-        <div className="col-lg-8">
+        <div className="col-lg-8 ">
           <News />
           <Adverts />
           <Politics />
@@ -48,11 +48,11 @@ const Welcome = () => (
           <Opinion />
           <PressRelease />
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 px-lg-10">
           <SideBar />
         </div>
       </div>
-    </Container>
+    </div>
   </Layout>
 )
 

@@ -31,6 +31,9 @@ const HeroSlider = () => {
     centerMode: true,
     centerPadding: "50px",
     slidesToShow: width < 800 ? 1 : width < 1000 ? 2 : 3,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    pauseOnHover: true,
     responsive: [
       {
         breakpoint: 700,

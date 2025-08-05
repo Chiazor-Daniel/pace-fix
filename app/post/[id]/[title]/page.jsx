@@ -1,14 +1,16 @@
 import PostPage from "../../../../src/assets/pages/post"
 
 // Server-side metadata generation for SEO/social sharing
-export async function generateMetadata({ params }) {
+export async function generateMetadata(context) {
+  const { id, title } = await context.params;   // <-- await params
+
   // Fetch post data from your API
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}posts/${params.id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}posts/${id}`);
   if (!res.ok) return {};
 
   const data = await res.json();
 
-  // Destructure the fields you use for meta tags
+  // Destructure fields for meta tags
   const { yoast_head_json } = data;
   const og_title = yoast_head_json?.title || "Post";
   const og_description = yoast_head_json?.og_description || "";
@@ -22,7 +24,7 @@ export async function generateMetadata({ params }) {
       description: og_description,
       images: [og_image],
       type: "article",
-      url: `https://pacesetterfrontier.com/post/${params.id}/${params.title}`,
+      url: `https://pacesetterfrontier.com/post/${id}/${title}`,
     },
     twitter: {
       card: "summary_large_image",

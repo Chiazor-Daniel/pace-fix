@@ -135,12 +135,9 @@ export const navMenu = [
   },
   {
     name: "policies",
-    links: [{ name: "privacy policy" }, { name: "terms and conditions" }],
+    links: [{ name: "privacy-policy" }, { name: "terms-and-conditions" }],
   },
-  {
-    name: "contact us",
-    link: "contact-us",
-  },
+ 
 ];
 
 export const Categories = {

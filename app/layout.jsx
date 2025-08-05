@@ -66,6 +66,10 @@ export const metadata = {
       name: 'mobile-web-app-capable',
       content: 'yes',
     },
+    {
+      name: 'google-adsense-account',
+      content: 'ca-pub-3536158399576400',
+    },
   ],
 }
 
@@ -73,13 +77,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <meta name="google-adsense-account" content="ca-pub-3536158399576400" />
         <link
- rel="stylesheet"
- href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
- integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
- crossOrigin="anonymous"
- />
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+          crossOrigin="anonymous"
+        />
         {/* <link
           rel="preload"
           as="style"
@@ -98,6 +101,18 @@ export default function RootLayout({ children }) {
         ></script>
         <script id="mcjs">
           {`!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/41cf0c45a5141cbfb27bfc3fd/bfb1cf43be183f753e97814fb.js");`}
+        </script>
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+        />
+        <script id="ga-init">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
+          `}
         </script>
       </head>
       <body>

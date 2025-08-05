@@ -37,10 +37,10 @@ const NavBar = () => {
         <div className="d-flex justify-content-between align-items-center">
           <Link href={"/"} className="navbar-brand">
             <Image
-              src="/top-logo.png"
+              src="/png.png"
               alt="Pacesetter Frontier Magazine"
-              height={70}
-              width={200}
+              height={30}
+              width={100}
               priority
               className="img-fluid"
             />
@@ -91,15 +91,7 @@ const NavBar = () => {
               <TfiSearch className="hover-red" />
             </button>
 
-            <a
-              href="https://news.pacesetterfrontier.com/enter"
-              rel="noreferrer"
-              className="btn btn-link p-0 me-2 text-dark"
-              target="_blank"
-              title="User Account"
-            >
-              <TfiUser className="hover-red" />
-            </a>
+
 
             <button
               className="btn btn-link p-0 text-dark hide-on-lg"

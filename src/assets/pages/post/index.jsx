@@ -5,6 +5,7 @@ import Head from 'next/head';
 
 import { Layout } from ".."
 import SideBar from "./SideBar"
+import { SidebarAd, BelowTitleAd, InContentAd, EndOfArticleAd, StickyMobileFooterAd } from '../../components/AdsPlacements'
 import {
   Adverts,
   Disclaimer,
@@ -88,28 +89,17 @@ const PostPage = () => {
   // Fetch current news and store as post ID
   const { loading, data } = UseFetch(url, `post_${newsID}`)
 
-  // Simulate post views - in real app, this would come from API
+  // Fetch and increment post views from server
   useEffect(() => {
-    if (newsID) {
-      // Get views from localStorage or set random number for demo
-      const savedViews = localStorage.getItem(`post_views_${newsID}`)
-      if (savedViews) {
-        setPostViews(Number.parseInt(savedViews))
-      } else {
-        // Generate random views for demo (50-5000)
-        const randomViews = Math.floor(Math.random() * 4950) + 50
-        setPostViews(randomViews)
-        localStorage.setItem(`post_views_${newsID}`, randomViews.toString())
-      }
-
-      // Increment view count
-      setTimeout(() => {
-        const currentViews = Number.parseInt(localStorage.getItem(`post_views_${newsID}`) || "0")
-        const newViews = currentViews + 1
-        setPostViews(newViews)
-        localStorage.setItem(`post_views_${newsID}`, newViews.toString())
-      }, 2000)
-    }
+    if (!newsID) return;
+    fetch(`/api/views/${newsID}`, { method: 'POST' })
+      .then(res => res.json())
+      .then(data => {
+        if (typeof data.views === 'number') setPostViews(data.views);
+      })
+      .catch(err => {
+        console.error('Failed to update post views:', err);
+      });
   }, [newsID])
 
   // Check postItem is not empty by confirming title
@@ -154,7 +144,7 @@ const PostPage = () => {
                 </b>
               </p>
               <img
-                src=${existingAdvert[count].image_file}
+                src=${existingAdvert[count]?.image_file}
                 alt="Advert ${count}"
                 class="img-thumbnail rounded advert-img-max-height"
               />
@@ -177,7 +167,7 @@ const PostPage = () => {
   }
 
   try {
-    information = addAdvertToNewsInfo(information)
+    information = content.rendered
   } catch (e) {
     console.error("Error joining advert images to post.", e)
     information = content.rendered
@@ -230,10 +220,15 @@ const PostPage = () => {
               <div className="col-md-12 px-0">
                 <PostTitle title={title.rendered} details={yoast_head_json} categories={categories} />
 
+                <BelowTitleAd />
+
                 {/* Post Views */}
                 <PostViews views={postViews} />
 
                 <div dangerouslySetInnerHTML={{ __html: information }} className="news-holder pe-md-3" />
+
+                {/* In-content ad example: place InContentAd between paragraphs if desired */}
+                {/* <InContentAd /> */}
 
                 {/* Post Reactions */}
                 <PostReactions postId={id} initialLikes={Math.floor(Math.random() * 50) + 5} />
@@ -243,7 +238,7 @@ const PostPage = () => {
                 <Disclaimer category={categories} />
                 {/* Comments */}
                 <CommentDetails post_id={id} />
-                <Adverts index={5} />
+                {/* <Adverts index={5} /> */}
                 {tags.length > 0 && (
                   <div className="mb-3">
                     <span className="badge rounded-pill bg-dark">Tags</span>
@@ -258,14 +253,18 @@ const PostPage = () => {
                   <ArticleTitle title="related posts" width={30} />
                 </div>
                 <BottomRecent categories={categories} />
+
+                <EndOfArticleAd />
               </div>
             </div>
           </div>
           <div className="col-md-3">
             <SideBar />
+            <SidebarAd />
           </div>
         </div>
       </div>
+      <StickyMobileFooterAd />
     </Layout>
   )
 }

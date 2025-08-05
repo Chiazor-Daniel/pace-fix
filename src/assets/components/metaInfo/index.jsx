@@ -57,14 +57,38 @@ export const PostReactions = ({ postId, initialLikes = 0 }) => {
   const [likes, setLikes] = React.useState(initialLikes)
   const [hasLiked, setHasLiked] = React.useState(false)
 
-  const handleLike = () => {
-    if (!hasLiked) {
-      setLikes((prev) => prev + 1)
-      setHasLiked(true)
-      // Here you would typically make an API call to save the like
-      // saveLike(postId);
+  // Fetch real like count on mount
+  React.useEffect(() => {
+    if (!postId) return;
+    fetch(`/api/likes/${postId}`)
+      .then(res => res.json())
+      .then(data => {
+        if (typeof data.likes === 'number') setLikes(data.likes);
+      })
+      .catch(err => {
+        console.error('Failed to fetch post likes:', err);
+      });
+    // Check localStorage to prevent multiple likes per session
+    if (typeof window !== 'undefined') {
+      setHasLiked(!!localStorage.getItem(`liked_post_${postId}`));
     }
-  }
+  }, [postId]);
+
+  const handleLike = () => {
+    if (hasLiked) return;
+    fetch(`/api/likes/${postId}`, { method: 'POST' })
+      .then(res => res.json())
+      .then(data => {
+        if (typeof data.likes === 'number') setLikes(data.likes);
+        setHasLiked(true);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(`liked_post_${postId}`, '1');
+        }
+      })
+      .catch(err => {
+        console.error('Failed to increment post like:', err);
+      });
+  };
 
   return (
     <div className="d-flex align-items-center gap-3 my-3 p-3 bg-light rounded">
@@ -82,8 +106,9 @@ export const PostReactions = ({ postId, initialLikes = 0 }) => {
         {hasLiked ? "Thanks for your reaction!" : "Show your support for this article"}
       </small>
     </div>
-  )
+  );
 }
+
 
 AuthorTime.propTypes = {
   author: PropTypes.string.isRequired,
