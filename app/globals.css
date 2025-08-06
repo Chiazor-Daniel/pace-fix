@@ -5,7 +5,10 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
-
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -92,3 +95,8 @@ body {
     @apply bg-background text-foreground;
   }
 }
+.post-image-holder img {
+  max-width: 100%;
+  height: auto;
+}
+

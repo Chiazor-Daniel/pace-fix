@@ -98,7 +98,13 @@ const PostPage = () => {
               </div>
               <div className="col-md-11 post-head">
                 <div className="post-image-holder text-center">
-                  <img src={Image} alt="Post" className="shadow rounded" onError={() => setImgLoaded(false)} />
+                  <img
+                    src={Image}
+                    alt="Post"
+                    className="shadow rounded img-fluid"
+                    onError={() => setImgLoaded(false)}
+                  />
+
                 </div>
                 {imgCaption && <p className="fw-bold mx-auto mt-2 text-muted"><small>{imgCaption}</small></p>}
               </div>
