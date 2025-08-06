@@ -12,7 +12,7 @@ const Search = () => {
   term = term.split("-", 5).join(" ")
   return (
     <Layout>
-      <div className="container-fluid">
+      <div className="container">
         <Common name={term} start={0} skip={12} columns={4} extras={term} />
       </div>
     </Layout>

@@ -1,263 +1,138 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import Head from 'next/head';
+import { useState, useEffect, useMemo } from "react"
+import Head from "next/head"
+import Skeleton from "react-loading-skeleton"
+import "react-loading-skeleton/dist/skeleton.css"
 
 import { Layout } from ".."
 import SideBar from "./SideBar"
-import { SidebarAd, BelowTitleAd, InContentAd, EndOfArticleAd, StickyMobileFooterAd } from '../../components/AdsPlacements'
+import { SidebarAd, EndOfArticleAd, StickyMobileFooterAd } from "../../components/AdsPlacements"
 import {
-  Adverts,
-  Disclaimer,
-  PostTitle,
-  Sharers,
-  SimpleSharers,
-  BottomRecent,
-  ArticleTitle,
-  CommentDetails,
-  WhatsappChannel,
+  Adverts, Disclaimer, PostTitle, Sharers, SimpleSharers,
+  BottomRecent, ArticleTitle, CommentDetails, WhatsappChannel
 } from "../../components"
 import { PostViews, PostReactions } from "../../components/metaInfo"
 import { usePostContext } from "../../context"
 import { Tags } from "../../data"
-
 import AltImage from "../../images/backup-img.jpg"
-import "./style.css"
 import { UseFetch, SocialPreviews } from "../../custom"
-import { Preloader } from "../../components/loaders"
+import GoogleAd from "@/app/googleAd/ad"
 
 const addGoogleAds = (paragraphs) => {
-  const script0 = `
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3536158399576400"
-         crossorigin="anonymous">
-    </script>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-3536158399576400"
-         data-ad-slot="9096348399"
-         data-ad-format="auto"
-         data-full-width-responsive="true">
-    </ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-`
-  const script1 = `
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3536158399576400"
-         crossorigin="anonymous">
-    </script>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-3536158399576400"
-         data-ad-slot="7380011854"
-         data-ad-format="auto"
-         data-full-width-responsive="true">
-    </ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-`
-
+  const scripts = [
+    `<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3536158399576400" data-ad-slot="9096348399" data-ad-format="auto"></ins>`,
+    `<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3536158399576400" data-ad-slot="7380011854" data-ad-format="auto"></ins>`
+  ]
   let count = 0
-  const adScripts = {
-    0: script0,
-    1: script1,
-  }
-
-  for (const index in paragraphs) {
-    // Add advert script every 4 paragraphs
-    if (index % 4 === 0) {
-      const addition = `
-            <div class="ad-container">${adScripts[count]}</div>
-          `
-      paragraphs[index] = paragraphs[index] + addition
-
-      if (count === 0) count = 1
-      else count = 0
-    }
-  }
-  return paragraphs
+  return paragraphs.map((p, i) => i % 4 === 0 ? `${p}<div class="ad-container">${scripts[count++ % 2]}</div>` : p)
 }
 
 const PostPage = () => {
   const [imgLoaded, setImgLoaded] = useState(true)
   const [postViews, setPostViews] = useState(0)
   const { postItem } = usePostContext()
-  let title, yoast_head_json, content, categories, id, tags
-  let information = ""
 
-  // Always call hooks at the top level
-  // get news id from url
   const newsID = typeof window !== "undefined" ? window.location.pathname.split("/")[2] : ""
   const url = `${process.env.NEXT_PUBLIC_API_URL}posts/${newsID}`
-  // Fetch current news and store as post ID
   const { loading, data } = UseFetch(url, `post_${newsID}`)
 
-  // Fetch and increment post views from server
+  // fetch views once
   useEffect(() => {
-    if (!newsID) return;
-    fetch(`/api/views/${newsID}`, { method: 'POST' })
-      .then(res => res.json())
-      .then(data => {
-        if (typeof data.views === 'number') setPostViews(data.views);
-      })
-      .catch(err => {
-        console.error('Failed to update post views:', err);
-      });
+    if (!newsID) return
+    fetch(`/api/views/${newsID}`, { method: "POST" })
+      .then((res) => res.json())
+      .then((data) => typeof data.views === "number" && setPostViews(data.views))
+      .catch(console.error)
   }, [newsID])
 
-  // Check postItem is not empty by confirming title
-  if (Object.keys(postItem).length === 0) {
-    if (loading) return <Preloader />
-    else {
-      // destructuring needed variables
-      ;({ title, yoast_head_json, content, categories, id, tags } = data)
-      // Usually when you get here using a copied url
-    }
-  } else {
-    // When you are clicking a post from the main page.
-    ;({ title, yoast_head_json, content, categories, id, tags } = postItem)
-  }
+  const post = Object.keys(postItem).length > 0 ? postItem : data
+  const { title, yoast_head_json, content, categories, id, tags } = post || {}
 
-  const Image = imgLoaded ? yoast_head_json.og_image[0].url : AltImage
-  const imgCaption = yoast_head_json.schema["@graph"][2].caption
-  information = content.rendered
+  // Memoize processed HTML
+  const information = useMemo(() => content?.rendered || "", [content])
 
-  // Set up variables for meta details
-  const { title: og_title, twitter_creator, twitter_card, og_description, og_image } = yoast_head_json
 
-  const addAdvertToNewsInfo = (html) => {
-    // Split the html into an array. separate using the paragraph.
-    html = html.split("</p>")
-    let count = 1
-    let existingAdvert = typeof window !== "undefined" ? sessionStorage.getItem("pacesetter_adverts") : null
-    if (existingAdvert) {
-      // Get advert from session Storage
-      existingAdvert = JSON.parse(existingAdvert)
-      //   Loop through the array and add advert image to the chosen paragraph.
-      for (const index in html) {
-        // Add advert image after every 2 paragraph if count is less than 5
-        if (index % 3 === 0) {
-          if (count >= 5) break
-          else if (count < 5) {
-            const advertImage = `
-            <div class="text-center my-4">
-              <p>
-                <b>
-                  <small>Advertisement</small>
-                </b>
-              </p>
-              <img
-                src=${existingAdvert[count]?.image_file}
-                alt="Advert ${count}"
-                class="img-thumbnail rounded advert-img-max-height"
-              />
+  const Image = imgLoaded ? yoast_head_json?.og_image?.[0]?.url : AltImage
+  const imgCaption = yoast_head_json?.schema?.["@graph"]?.[2]?.caption || ""
+
+  if (loading || !post) {
+    return (
+      <Layout>
+        <div className="container my-5">
+          <Skeleton height={400} className="w-100 mb-4 rounded" />
+          <Skeleton width="60%" height={40} className="mb-3" />
+          <Skeleton count={8} />
         </div>
-    `
-            html[index] = html[index] + advertImage
-            // increment counter.
-            count++
-          }
-        }
-      }
-    }
-    html = addGoogleAds(html)
-    //   Join the modified html array into a string and return
-    html = html.join("")
-    // Use regular expressions to replace width and remove height
-    html = html.replace(/width="\d+"/g, 'width="100%"').replace(/height="\d+"/g, "")
-
-    return html
-  }
-
-  try {
-    information = content.rendered
-  } catch (e) {
-    console.error("Error joining advert images to post.", e)
-    information = content.rendered
+      </Layout>
+    )
   }
 
   return (
     <Layout>
       <Head>
-        <title>{og_title}</title>
-        <meta property="og:title" content={og_title} />
-        <meta property="og:description" content={og_description} />
-        <meta property="og:image" content={og_image[0].url} />
-        <meta property="og:type" content="article" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={og_title} />
-        <meta name="twitter:description" content={og_description} />
-        <meta name="twitter:image" content={og_image[0].url} />
+        <title>{yoast_head_json.title}</title>
+        <meta property="og:title" content={yoast_head_json.title} />
+        <meta property="og:description" content={yoast_head_json.og_description} />
+        <meta property="og:image" content={yoast_head_json.og_image?.[0]?.url} />
       </Head>
       <SocialPreviews
-        name={twitter_creator}
-        type={twitter_card}
-        title={og_title}
-        description={og_description}
-        image={og_image[0].url}
+        name={yoast_head_json.twitter_creator}
+        type={yoast_head_json.twitter_card}
+        title={yoast_head_json.title}
+        description={yoast_head_json.og_description}
+        image={yoast_head_json.og_image?.[0]?.url}
       />
-      <div className="post-container my-5">
+
+      <div className="container my-5">
+        <div className="d-flex justify-content-between align-items-center mb-4 gap-3 flex-wrap" suppressHydrationWarning>
+          <GoogleAd dataAdSlot="9096348399" />
+        </div>
         <div className="row">
           <div className="col-md-9">
             <Adverts index={0} />
+
             <div className="row">
               <div className="col-md-1 sharers">
-                <Sharers title={yoast_head_json.title} image={og_image[0].url} description={og_description} />
+                <Sharers title={yoast_head_json.title} image={Image} description={yoast_head_json.og_description} />
               </div>
               <div className="col-md-11 post-head">
                 <div className="post-image-holder text-center">
-                  <img src={Image || "/placeholder.svg"} alt="Post title" className="shadow rounded" />
-                  <img
-                    src={Image || "/placeholder.svg"}
-                    alt="Backup Pic"
-                    style={{ display: "none" }}
-                    onError={() => setImgLoaded(false)}
-                  />
+                  <img src={Image} alt="Post" className="shadow rounded" onError={() => setImgLoaded(false)} />
                 </div>
-                <p className="fw-bold mx-auto mt-2 text-muted">
-                  <small>{imgCaption}</small>
-                </p>
+                {imgCaption && <p className="fw-bold mx-auto mt-2 text-muted"><small>{imgCaption}</small></p>}
               </div>
             </div>
-            <div className="row my-1 align-items-start">
-              <div className="col-md-12 px-0">
-                <PostTitle title={title.rendered} details={yoast_head_json} categories={categories} />
 
-                {/* <BelowTitleAd /> */}
+            <PostTitle title={title.rendered} details={yoast_head_json} categories={categories} />
+            <PostViews views={postViews} />
 
-                {/* Post Views */}
-                <PostViews views={postViews} />
+            <div dangerouslySetInnerHTML={{ __html: information }} className="news-holder pe-md-3" />
 
-                <div dangerouslySetInnerHTML={{ __html: information }} className="news-holder pe-md-3" />
+            <PostReactions postId={id} initialLikes={Math.floor(Math.random() * 50) + 5} />
+            <SimpleSharers title={yoast_head_json.title} image={Image} description={yoast_head_json.og_description} />
+            <WhatsappChannel />
+            <Disclaimer category={categories} />
+            <CommentDetails post_id={id} />
 
-                {/* In-content ad example: place InContentAd between paragraphs if desired */}
-                {/* <InContentAd /> */}
-
-                {/* Post Reactions */}
-                <PostReactions postId={id} initialLikes={Math.floor(Math.random() * 50) + 5} />
-
-                <SimpleSharers title={yoast_head_json.title} image={og_image[0].url} description={og_description} />
-                <WhatsappChannel />
-                <Disclaimer category={categories} />
-                {/* Comments */}
-                <CommentDetails post_id={id} />
-                {/* <Adverts index={5} /> */}
-                {tags.length > 0 && (
-                  <div className="mb-3">
-                    <span className="badge rounded-pill bg-dark">Tags</span>
-                    {tags.map((tag, index) => (
-                      <small key={index} className="badge rounded-pill bg-light ms-2 text-muted">
-                        {Tags[tag]}
-                      </small>
-                    ))}
-                  </div>
-                )}
-                <div className="mb-5">
-                  <ArticleTitle title="related posts" width={30} />
-                </div>
-                <BottomRecent categories={categories} />
-
-                <EndOfArticleAd />
+            {tags?.length > 0 && (
+              <div className="mb-3">
+                <span className="badge rounded-pill bg-dark">Tags</span>
+                {tags.map((tag, i) => (
+                  <small key={i} className="badge rounded-pill bg-light ms-2 text-muted">
+                    {Tags[tag]}
+                  </small>
+                ))}
               </div>
+            )}
+
+            <div className="mb-5">
+              <ArticleTitle title="related posts" width={30} />
             </div>
+            <BottomRecent categories={categories} />
+            <EndOfArticleAd />
           </div>
+
           <div className="col-md-3">
             <SideBar />
             <SidebarAd />

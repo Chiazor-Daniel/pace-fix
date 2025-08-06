@@ -1,71 +1,37 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import Image from "next/image"
-import UseFetch from "../../../custom/UseFetch"
+import useFetch from "../../../custom/UseFetch"
 
 const AltImage = "/default_advert.jpg"
 
 const Adverts = ({ index, hideLabel = false }) => {
-  const [isClient, setIsClient] = useState(false)
-  const [image, setImage] = useState(AltImage)
-  
   const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}promotions/`
-  const { loading, data } = UseFetch(url, "adverts")
+  const { loading, data } = useFetch(url, "adverts")
 
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
+  const advert = !loading && data?.[index]
+  const image = advert?.image_file || AltImage
+  const link = advert?.link || null
 
-  useEffect(() => {
-    if (isClient && !loading && data && data[index]) {
-      setImage(data[index]?.image_file || AltImage)
-    }
-  }, [isClient, loading, data, index])
-
-  if (!isClient) {
-    return (
-      <div className="text-center my-4">
-        <p className={hideLabel ? "d-none" : ""}>
+  return (
+    <div className="text-center my-4">
+      {!hideLabel && (
+        <p>
           <b>
             <small>Advertisement</small>
           </b>
         </p>
-        <a href="#" className="d-block">
-          <Image
-            src={AltImage}
-            alt={`Advert ${index}`}
-            width={600}
-            height={400}
-            className={"img-thumbnail rounded advert-img-max-height"}
-            style={{ objectFit: "cover" }}
-          />
-        </a>
-      </div>
-    )
-  }
+      )}
 
-  return (
-    <div className="text-center my-4">
-      <p className={hideLabel ? "d-none" : ""}>
-        <b>
-          <small>Advertisement</small>
-        </b>
-      </p>
-      {data[index] ? (
-        <a 
-          href={data[index].link} 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="d-block"
-        >
+      {link ? (
+        <a href={link} target="_blank" rel="noopener noreferrer" className="d-block">
           <Image
             src={image}
             alt={`Advert ${index}`}
             width={600}
             height={400}
-            className={"img-thumbnail rounded advert-img-max-height"}
+            className="img-thumbnail rounded advert-img-max-height"
             style={{ objectFit: "cover" }}
           />
         </a>
@@ -76,7 +42,7 @@ const Adverts = ({ index, hideLabel = false }) => {
             alt={`Advert ${index}`}
             width={600}
             height={400}
-            className={"img-thumbnail rounded advert-img-max-height"}
+            className="img-thumbnail rounded advert-img-max-height"
             style={{ objectFit: "cover" }}
           />
         </div>

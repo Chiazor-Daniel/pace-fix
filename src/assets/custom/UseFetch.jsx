@@ -1,46 +1,50 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
-import PropTypes from "prop-types"
+import useSWR from "swr"
 
-const UseFetch = (url, cacheName = "") => {
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState([])
+const fetcher = async (url) => {
+  const res = await fetch(url)
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  const contentType = res.headers.get("content-type") || ""
+  if (!contentType.includes("application/json")) {
+    throw new Error("Response is not JSON")
+  }
+  return res.json()
+}
 
-  const getData = useCallback(async () => {
-    try {
-      // We checked if it's cached and then retrieve it.
-      const storageName = `pacesetter_${cacheName}`
-      const storageDetails = sessionStorage.getItem(storageName)
+const useFetch = (url, cacheName = "", expiryMs = 3600000) => {
+  const key = cacheName || url
 
-      if (storageDetails) {
-        setData(JSON.parse(storageDetails))
-        setLoading(false)
-      } else {
-        const response = await fetch(url)
-        const data = await response.json()
-        setData(data)
-        setLoading(false)
+  const { data, error, isLoading, mutate } = useSWR(key, async () => {
+    // Check sessionStorage first
+    const storageKey = `pacesetter_${key}`
+    const cached = sessionStorage.getItem(storageKey)
+    const now = Date.now()
 
-        // Cache data if cache name is given.
-        if (cacheName) sessionStorage.setItem(storageName, JSON.stringify(data))
+    if (cached) {
+      const { value, timestamp } = JSON.parse(cached)
+      if (now - timestamp < expiryMs) {
+        // Return cached immediately (stale-while-revalidate handled by SWR)
+        setTimeout(() => mutate(fetcher(url), false), 0) // background refresh
+        return value
       }
-    } catch (error) {
-      console.log("Fetch Error occurred.")
-      console.error(error)
     }
-  }, [url, cacheName])
 
-  useEffect(() => {
-    getData()
-  }, [url, getData])
+    // No valid cache → fetch fresh
+    const fresh = await fetcher(url)
+    sessionStorage.setItem(storageKey, JSON.stringify({ value: fresh, timestamp: now }))
+    return fresh
+  }, {
+    dedupingInterval: expiryMs,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  })
 
-  return { loading, data }
+  return {
+    loading: isLoading,
+    data: data || [],
+    error: error ? error.message : null,
+  }
 }
 
-UseFetch.propTypes = {
-  url: PropTypes.string.isRequired,
-  cacheName: PropTypes.string,
-}
-
-export default UseFetch
+export default useFetch

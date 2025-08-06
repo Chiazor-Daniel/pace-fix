@@ -10,7 +10,7 @@ const Category = () => {
   const { name } = useParams()
   return (
     <Layout>
-      <div className="container-fluid">
+      <div className="container">
         <Common name={name} start={0} skip={12} columns={4} />
       </div>
     </Layout>
