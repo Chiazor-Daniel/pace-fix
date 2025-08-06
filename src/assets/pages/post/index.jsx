@@ -220,7 +220,7 @@ const PostPage = () => {
               <div className="col-md-12 px-0">
                 <PostTitle title={title.rendered} details={yoast_head_json} categories={categories} />
 
-                <BelowTitleAd />
+                {/* <BelowTitleAd /> */}
 
                 {/* Post Views */}
                 <PostViews views={postViews} />

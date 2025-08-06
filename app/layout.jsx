@@ -12,7 +12,7 @@ export const metadata = {
   title: "Pacesetter Frontier Magazine",
   description: "Pacesetter Frontier Magazine - Setting the pace and leaving strides in time",
   icons: {
-    icon: "/logo.png",
+    icon: "/png.png",
   },
   generator: "v0.dev",
   robots: {
@@ -33,7 +33,7 @@ export const metadata = {
     siteName: "Pacesetter Frontier Magazine",
     images: [
       {
-        url: "/logo.png",
+        url: "/png.png",
         width: 800,
         height: 600,
         alt: "Pacesetter Frontier Magazine Logo",
@@ -44,7 +44,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Pacesetter Frontier Magazine",
     description: "Setting the pace and leaving strides in time",
-    images: ["/logo.png"],
+    images: ["/png.png"],
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
