@@ -1,0 +1,27 @@
+.my-preloader{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    z-index: 1000000;
+    transition: 1s ease all;
+    background-color: white;
+    top: 0;
+}
+.my-preloader .loader{
+    height: 250px;
+    width: 250px;
+    margin: auto;
+    display: flex;
+}
+.my-preloader .loader-box{
+    height: 80%;
+    width: 80%;
+    border: 6px solid #222;
+    border-top-color: #ffffff10;
+    border-right-color: var(--main-red-dark);
+    margin: auto;
+    display: flex;
+    border-radius: 50%;
+    animation: App-logo-spin 2s linear infinite;
+}

@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS post_likes (
+  post_id VARCHAR(255) PRIMARY KEY,
+  likes INTEGER DEFAULT 0
+);

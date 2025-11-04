@@ -1,0 +1,227 @@
+:root {
+  --main-red: #fe0000;
+  --main-red-dark: maroon;
+  --main-yellow: #ffc800;
+  --main-dark: #1e1e1e;
+  --t-slow: 0.7s ease all;
+  --t-med: 0.5s ease all;
+  --t-fast: 0.3s ease all;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: auto;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px whitesmoke;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: whitesmoke;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #111111;
+  height: 100px;
+  transition: var(--t-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--main-red-dark);
+}
+
+body {
+  margin: 0;
+  /*font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI",*/
+  /*  "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",*/
+  /*  "Helvetica Neue", sans-serif;*/
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.modal-backdrop {
+  z-index: 100 !important;
+}
+
+.fs-10 {
+  font-size: 10px !important;
+}
+
+.fs-11 {
+  font-size: 11px !important;
+}
+
+.fs-12 {
+  font-size: 12px !important;
+}
+
+.fs-13 {
+  font-size: 13px !important;
+}
+
+.fs-14 {
+  font-size: 14.5px !important;
+}
+
+.raleway {
+  font-family: Raleway, sans-serif !important;
+}
+
+.mont {
+  font-family: Montserrat, sans-serif !important;
+}
+
+.poppins {
+  font-family: Poppins, sans-serif !important;
+}
+
+.pointer {
+  cursor: pointer !important;
+}
+
+.transit-slow {
+  transition: var(--t-slow) !important;
+}
+
+.error {
+  text-align: center;
+  display: flex;
+  height: 350px;
+  font-size: 5em;
+  font-weight: bold;
+  width: 350px;
+}
+
+.hover-yellow:hover {
+  color: var(--main-yellow) !important;
+  transition: var(--t-med);
+}
+
+.hover-red:hover {
+  color: var(--main-red) !important;
+  transition: var(--t-med);
+}
+
+.advert-img-max-height{
+  max-height: 600px;
+}
+
+/*SLICK SLIDER SETTINGS*/
+.slick-prev:before,
+.slick-next:before {
+  color: var(--main-red-dark) !important;
+  font-size: 30px !important;
+  background-color: #ffffff55;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.slick-prev {
+  left: 20px !important;
+  z-index: 100;
+}
+
+.slick-next {
+  right: 35px !important;
+  z-index: 100;
+}
+.min-h-200 {
+  min-height: 200px !important;
+}
+.w-30 {
+  width: 30% !important;
+}
+
+.t-white-8 {
+  background-color: #ffffffdd !important;
+}
+
+.hide-on-sm {
+  display: inherit !important;
+}
+
+.sticky-sm {
+  position: sticky;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  background-color: #ffffffee;
+}
+
+.hide-on-lg {
+  display: none !important;
+}
+
+.text-justify {
+  text-align: justify !important;
+}
+
+/* GENERAL FOOTER SETTINGS */
+.footer {
+  background-color: var(--main-dark);
+  min-height: 90vh;
+}
+.credit {
+  min-height: 150px;
+  border-top: 1px solid #ffffff55;
+}
+#scroll-top {
+  position: fixed;
+  right: 20px;
+  bottom: 50px;
+}
+#scroll-top:hover {
+  background-color: silver;
+  color: darkred;
+  transition: var(--t-slow);
+}
+.lh-2 {
+  line-height: 2em;
+}
+.lh-5 {
+  line-height: 1.5em;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .hide-on-sm {
+    display: none !important;
+  }
+
+  .hide-on-lg {
+    display: inherit !important;
+  }
+
+  .sticky-sm {
+    background-color: #ffffffdd;
+    padding-top: 2.12em !important;
+  }
+  .fs-16-mobile {
+    font-size: 16px !important;
+  }
+  .fs-10-mobile {
+    font-size: 10px !important;
+  }
+  .fs-11-mobile {
+    font-size: 11px !important;
+  }
+  .fs-12-mobile {
+    font-size: 12px !important;
+}
+}
