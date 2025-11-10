@@ -1,19 +1,34 @@
-"use client"
+"use client";
 
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 
-import { AuthorTime } from "../metaInfo"
+import { AuthorTime } from "../metaInfo";
 
-import "./style.css"
-import { Categories } from "../../data"
-import Link from "next/link"
+import "./style.css";
+import { Categories } from "../../data";
+import Link from "next/link";
 
-const TopHero = ({ id, date, slug, title, content, categories, yoast_head_json }) => {
-  const imageUrl = yoast_head_json.og_image[0].url
-  const author = yoast_head_json.author
+const TopHero = ({
+  id,
+  date,
+  slug,
+  title,
+  content,
+  categories = [],
+  yoast_head_json = {},
+}) => {
+  const imageUrl = yoast_head_json?.og_image?.[0]?.url || "/logo.png";
+  const author = yoast_head_json?.author || "";
+  const readTime = (() => {
+    const t = yoast_head_json?.twitter_misc?.["Est. reading time"];
+    return Array.isArray(t) ? t[0] : t || "";
+  })();
 
   return (
-    <div className="col-md-12 p-2 mx-2 top-hero d-flex shadow" style={{ backgroundImage: `url(${imageUrl})` }}>
+    <div
+      className="col-md-12 p-2 mx-2 top-hero d-flex shadow"
+      style={{ backgroundImage: `url(${imageUrl})` }}
+    >
       <div className="hero-overlay d-flex flex-column">
         <div className="h-50" />
         <div className="m-auto w-75 text-white">
@@ -21,29 +36,33 @@ const TopHero = ({ id, date, slug, title, content, categories, yoast_head_json }
             {categories.map((id) => (
               <Link
                 className="text-white text-decoration-none fw-bold me-1 category"
-                href={`/category/${Categories[id]}`}
+                href={`/category/${Categories[id] || ""}`}
                 key={id}
               >
-                {Categories[id]}
+                {Categories[id] || ""}
               </Link>
             ))}
           </p>
           <p
             className="fs-4 poppins text-center fw-bold title fs-16-mobile"
-            dangerouslySetInnerHTML={{ __html: title.rendered }}
+            dangerouslySetInnerHTML={{
+              __html:
+                (title && title.rendered) ||
+                (typeof title === "string" ? title : ""),
+            }}
           />
           <AuthorTime
             date={date}
             comments={2}
             author={author}
-            readTime={yoast_head_json.twitter_misc["Est. reading time"][0]}
+            readTime={readTime}
             between
           />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 TopHero.propTypes = {
   id: PropTypes.number,
@@ -53,6 +72,6 @@ TopHero.propTypes = {
   content: PropTypes.object,
   categories: PropTypes.array,
   yoast_head_json: PropTypes.object,
-}
+};
 
-export default TopHero
+export default TopHero;

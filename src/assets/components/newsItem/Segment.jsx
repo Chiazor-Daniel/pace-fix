@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-import PropTypes from "prop-types"
-import { AuthorTime, PostViews, ViewComment } from "../metaInfo"
-import { usePostContext } from "../../context"
+import PropTypes from "prop-types";
+import { AuthorTime, PostViews, ViewComment } from "../metaInfo";
+import { usePostContext } from "../../context";
 
-import "./style.css"
-const AltImage = "/src/assets/images/backup-img.jpg"
-import { SimpleSharers } from "../sharers"
-import { truncateExcerpt } from "../../custom"
+import "./style.css";
+const AltImage = "/src/assets/images/backup-img.jpg";
+import { SimpleSharers } from "../sharers";
+import { truncateExcerpt } from "../../custom";
 
 export const VerticalSegment = ({
   id,
@@ -27,29 +27,35 @@ export const VerticalSegment = ({
   sharePost = false,
   showDesc = true,
 }) => {
-  // set up state to check image. 
-  const [imgLoaded, setImgLoaded] = useState(true)
-  const Image = imgLoaded ? yoast_head_json.og_image[0].url : AltImage
-  const author = yoast_head_json.author
-  const router = useRouter()
-  const { updatePostItem } = usePostContext()
-  const [views, setViews] = useState(0)
+  // set up state to check image.
+  const [imgLoaded, setImgLoaded] = useState(true);
+  const Image = imgLoaded
+    ? yoast_head_json?.og_image?.[0]?.url || AltImage
+    : AltImage;
+  const author = yoast_head_json?.author || item?.author || "Unknown";
+  const estReadingTime = (() => {
+    const t = yoast_head_json?.twitter_misc?.["Est. reading time"];
+    return Array.isArray(t) ? t[0] : t;
+  })();
+  const router = useRouter();
+  const { updatePostItem } = usePostContext();
+  const [views, setViews] = useState(0);
   useEffect(() => {
     if (!id) return;
     fetch(`/api/views/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        if (typeof data.views === 'number') setViews(data.views);
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof data.views === "number") setViews(data.views);
       })
-      .catch(err => {
-        console.error('Failed to fetch post views:', err);
+      .catch((err) => {
+        console.error("Failed to fetch post views:", err);
       });
-  }, [id])
+  }, [id]);
 
   const handlePostClick = () => {
-    updatePostItem(item)
-    router.push(`/post/${id}/${slug}`)
-  }
+    updatePostItem(item);
+    router.push(`/post/${id}/${slug}`);
+  };
 
   return (
     <div className="mx-1 mt-3">
@@ -78,42 +84,60 @@ export const VerticalSegment = ({
           date={date}
           author={author}
           comments={12}
-          readTime={yoast_head_json?.twitter_misc?.["Est. reading time"][0]}
+          readTime={estReadingTime}
           between
         />
       </div>
-      {showDesc && <p dangerouslySetInnerHTML={{ __html: truncateExcerpt(excerpt.rendered) }} />}
+      {showDesc && (
+        <p
+          dangerouslySetInnerHTML={{
+            __html: truncateExcerpt(excerpt?.rendered || ""),
+          }}
+        />
+      )}
       {sharePost && (
         <div className="mt-3">
           <SimpleSharers title={yoast_head_json.title} />
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export const TextFirstSegment = ({ yoast_head_json, title, excerpt, date, item, id, slug }) => {
-  const Image = yoast_head_json.og_image[0].url
-  const author = yoast_head_json.author
-  const router = useRouter()
-  const { updatePostItem } = usePostContext()
-  const [views, setViews] = useState(0)
+export const TextFirstSegment = ({
+  yoast_head_json,
+  title,
+  excerpt,
+  date,
+  item,
+  id,
+  slug,
+}) => {
+  const Image = yoast_head_json?.og_image?.[0]?.url || AltImage;
+  const author = yoast_head_json?.author || item?.author || "Unknown";
+  const estReadingTime = (() => {
+    const t = yoast_head_json?.twitter_misc?.["Est. reading time"];
+    return Array.isArray(t) ? t[0] : t;
+  })();
+  const router = useRouter();
+  const { updatePostItem } = usePostContext();
+  const [views, setViews] = useState(0);
   useEffect(() => {
     if (!id) return;
     fetch(`/api/views/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        if (typeof data.views === 'number') setViews(data.views);
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof data.views === "number") setViews(data.views);
       })
-      .catch(err => {
-        console.error('Failed to fetch post views:', err);
+      .catch((err) => {
+        console.error("Failed to fetch post views:", err);
       });
-  }, [id])
+  }, [id]);
 
   const handlePostClick = () => {
-    updatePostItem(item)
-    router.push(`/post/${id}/${slug}`)
-  }
+    updatePostItem(item);
+    router.push(`/post/${id}/${slug}`);
+  };
 
   return (
     <div
@@ -130,47 +154,54 @@ export const TextFirstSegment = ({ yoast_head_json, title, excerpt, date, item, 
         <div className="my-3">
           {/* <PostViews views={views} /> */}
           <AuthorTime
-            date={date} 
+            date={date}
             comments={2}
             author={author}
-            readTime={yoast_head_json?.twitter_misc?.["Est. reading time"][0]}
+            readTime={estReadingTime}
           />
         </div>
         <p dangerouslySetInnerHTML={{ __html: excerpt.rendered }} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export const LittlePieceSegment = ({ title, yoast_head_json, item, id, slug }) => {
+export const LittlePieceSegment = ({
+  title,
+  yoast_head_json,
+  item,
+  id,
+  slug,
+}) => {
   // Segment for the latest posts on the sidebar and footer.
 
-  const [imgLoaded, setImgLoaded] = useState(true)
-  let Image
-  try {
-    Image = imgLoaded ? yoast_head_json.og_image[0].url : AltImage
-  } catch (e) {
-    Image = imgLoaded ? yoast_head_json.schema["@graph"][2].url : AltImage
+  const [imgLoaded, setImgLoaded] = useState(true);
+  let Image = AltImage;
+  if (imgLoaded) {
+    Image =
+      yoast_head_json?.og_image?.[0]?.url ||
+      yoast_head_json?.schema?.["@graph"]?.[2]?.url ||
+      AltImage;
   }
-  const router = useRouter()
-  const { updatePostItem } = usePostContext()
-  const [views, setViews] = useState(0)
+  const router = useRouter();
+  const { updatePostItem } = usePostContext();
+  const [views, setViews] = useState(0);
   useEffect(() => {
     if (!id) return;
     fetch(`/api/views/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        if (typeof data.views === 'number') setViews(data.views);
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof data.views === "number") setViews(data.views);
       })
-      .catch(err => {
-        console.error('Failed to fetch post views:', err);
+      .catch((err) => {
+        console.error("Failed to fetch post views:", err);
       });
-  }, [id])
+  }, [id]);
 
   const handlePostClick = () => {
-    updatePostItem(item)
-    router.push(`/post/${id}/${slug}`)
-  }
+    updatePostItem(item);
+    router.push(`/post/${id}/${slug}`);
+  };
 
   return (
     <>
@@ -192,13 +223,17 @@ export const LittlePieceSegment = ({ title, yoast_head_json, item, id, slug }) =
           />
         </div>
         <div className="ms-2 w-75 fs-12 fw-bold">
-          <span dangerouslySetInnerHTML={{ __html: title.rendered }} className="pointer" onClick={handlePostClick} />
+          <span
+            dangerouslySetInnerHTML={{ __html: title?.rendered || "" }}
+            className="pointer"
+            onClick={handlePostClick}
+          />
           <ViewComment views={views} />
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 VerticalSegment.propTypes = {
   id: PropTypes.number,
@@ -215,7 +250,7 @@ VerticalSegment.propTypes = {
   imgClass: PropTypes.string,
   sharePost: PropTypes.bool,
   showDesc: PropTypes.bool,
-}
+};
 
 TextFirstSegment.propTypes = {
   id: PropTypes.number,
@@ -225,7 +260,7 @@ TextFirstSegment.propTypes = {
   yoast_head_json: PropTypes.object,
   item: PropTypes.object,
   slug: PropTypes.string,
-}
+};
 
 LittlePieceSegment.propTypes = {
   title: PropTypes.object,
@@ -233,4 +268,4 @@ LittlePieceSegment.propTypes = {
   item: PropTypes.object,
   slug: PropTypes.string,
   id: PropTypes.number,
-}
+};
