@@ -15,15 +15,15 @@ const SideMain = () => {
     <>
       {loading
         ? Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="mb-4">
-              <Skeleton height={180} className="w-100 mb-2 rounded" />
-              <Skeleton width="70%" />
-              <Skeleton width="40%" />
-            </div>
-          ))
+          <div key={i} className="mb-4">
+            <Skeleton height={180} className="w-100 mb-2 rounded" />
+            <Skeleton width="70%" />
+            <Skeleton width="40%" />
+          </div>
+        ))
         : data.slice(2, 8).map((item) => (
-            <TextFirstSegment key={item.id} {...item} item={item} />
-          ))}
+          <TextFirstSegment key={item.id} {...item} item={item} />
+        ))}
 
       <div>
         <ArticleTitle title="latest" width={30} class_="fs-5" />

@@ -97,8 +97,8 @@ const Contact = () => {
           <div className="row">
             <div className="col-lg-8 mx-auto">
               <div className="text-center mb-5">
-                <h1 className="fw-bold mb-4" style={{ fontFamily: 'inherit' }}>Contact Information</h1>
-                <p className="lead" style={{ fontFamily: 'inherit', fontSize: '1.1rem', lineHeight: '1.6' }}>
+                <h1 className="fw-bold mb-4">Contact Information</h1>
+                <p className="lead">
                   Ready to advertise with us or have a general inquiry? We'd love to hear from you.
                 </p>
               </div>
@@ -173,10 +173,10 @@ const Contact = () => {
                     <FaFacebook className="me-2" />
                     Facebook
                   </a>
-                  <a href="#" className="btn btn-outline-dark btn-sm">
+                  <a href="https://x.com/pacefrontier?t=Qwc_E5t52eq1beAyuXMdmw&s=09" className="btn btn-outline-dark btn-sm" target="_blank" rel="noreferrer">
                     <FaXTwitter className="me-2" />X (Twitter)
                   </a>
-                  <a href="#" className="btn btn-outline-danger btn-sm">
+                  <a href="https://www.instagram.com/frontierdiscourse?igsh=MTgyaW9la21pcGtpMg==" className="btn btn-outline-danger btn-sm" target="_blank" rel="noreferrer">
                     <FaInstagram className="me-2" />
                     Instagram
                   </a>
