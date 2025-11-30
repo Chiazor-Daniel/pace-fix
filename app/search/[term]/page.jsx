@@ -5,7 +5,7 @@ export async function generateMetadata({ params }) {
   const searchTerm = params.term.replace(/-/g, ' ');
   const title = `Search Results for "${searchTerm}" | Pacesetter Frontier Magazine`;
   const description = `Find the latest articles and news related to "${searchTerm}" on Pacesetter Frontier Magazine.`;
-  
+
   return {
     title,
     description,

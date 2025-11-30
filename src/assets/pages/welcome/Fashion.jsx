@@ -2,8 +2,8 @@
 
 import { Common } from "../../components"
 
-const Fashion = () => {
-  return <Common name="Fashion" start={0} />
+const Fashion = (props) => {
+  return <Common {...props} name="Fashion" start={0} />
 }
 
 export default Fashion
