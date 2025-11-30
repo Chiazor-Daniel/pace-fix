@@ -1,7 +1,6 @@
 import Category from "../../../../../src/assets/pages/category"
 
-export async function generateMetadata(context) {
-  const params = await context.params;
+export async function generateMetadata({ params }) {
   const categoryName = params.name.replace(/-/g, ' ');
   const title = `${categoryName.charAt(0).toUpperCase() + categoryName.slice(1)} | Pacesetter Frontier Magazine`;
   const description = `Explore the latest articles and news in the ${categoryName} category on Pacesetter Frontier Magazine.`;

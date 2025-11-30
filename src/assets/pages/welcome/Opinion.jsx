@@ -2,10 +2,10 @@
 
 import { Common } from "../../components"
 
-const Opinion = () => {
+const Opinion = (props) => {
   return (
     <>
-      <Common name="Opinion" start={0} />
+      <Common {...props} name="Opinion" start={0} />
     </>
   )
 }

@@ -2,10 +2,10 @@
 
 import { Common } from "../../components"
 
-const BusinessEconomy = () => {
+const BusinessEconomy = (props) => {
   return (
     <>
-      <Common name="Business/Economy" start={0} />
+      <Common {...props} name="Business/Economy" start={0} />
     </>
   )
 }

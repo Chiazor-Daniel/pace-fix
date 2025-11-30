@@ -2,9 +2,9 @@
 
 import { Common } from "../../components"
 
-const WorldNews = () => {
+const WorldNews = (props) => {
   return (
-   <Common name="World News" start={0} />
+   <Common {...props} name="World News" start={0} />
   )
 }
 
