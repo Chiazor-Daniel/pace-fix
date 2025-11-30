@@ -96,8 +96,17 @@ export const navMenu = [
     link: "",
   },
   {
-    name: "About Us",
-    link: "about-us",
+    name: "About Us/Contact Us",
+    links: [
+      {
+        name: "About Us",
+        link: "/about-us",
+      },
+      {
+        name: "Contact Us",
+        link: "/contact-us",
+      },
+    ],
   },
   {
     name: "Columns",

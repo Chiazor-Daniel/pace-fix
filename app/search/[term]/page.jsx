@@ -1,11 +1,12 @@
 import Search from "../../../src/assets/pages/search"
 
 // Generate metadata for search pages
-export async function generateMetadata({ params }) {
+export async function generateMetadata(context) {
+  const params = await context.params;
   const searchTerm = params.term.replace(/-/g, ' ');
   const title = `Search Results for "${searchTerm}" | Pacesetter Frontier Magazine`;
   const description = `Find the latest articles and news related to "${searchTerm}" on Pacesetter Frontier Magazine.`;
-  
+
   return {
     title,
     description,

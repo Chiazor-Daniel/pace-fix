@@ -13,12 +13,14 @@ import { Categories } from "../../../data";
 
 const CommonHome = ({ name, start, skip = 4, columns = 6, extras = "" }) => {
   const categoryId = getKeyByValue(Categories, name) ?? 6;
+
+  // Fetch 20 items for better Load More experience
   const url = extras.trim()
-    ? `${process.env.NEXT_PUBLIC_API_URL}posts?search=${extras}&per_page=16`
-    : `${process.env.NEXT_PUBLIC_API_URL}posts?categories=${categoryId}&per_page=40`;
+    ? `${process.env.NEXT_PUBLIC_API_URL}posts?search=${extras}&per_page=20`
+    : `${process.env.NEXT_PUBLIC_API_URL}posts?categories=${categoryId}&per_page=20`;
 
   const [begin, setBegin] = useState(start);
-  const { loading, data } = UseFetch(url, `posts_${name}`); // 👈 fetch immediately
+  const { loading, data } = UseFetch(url, `posts_${name}`);
 
   const handleClick = () => setBegin((prev) => prev + skip);
 
@@ -27,12 +29,18 @@ const CommonHome = ({ name, start, skip = 4, columns = 6, extras = "" }) => {
     return data.slice(start, begin + skip);
   }, [data, start, begin, skip]);
 
+  // Show fewer skeletons initially for faster perceived load
+  const skeletonCount = 4;
+
+  // Check if there's more data to load
+  const hasMore = data && visiblePosts.length < data.length;
+
   return (
     <div className="p-3 mb-5">
       <ArticleTitle title={name} />
       <div className="py-4 row">
         {loading
-          ? Array.from({ length: skip }).map((_, i) => (
+          ? Array.from({ length: skeletonCount }).map((_, i) => (
             <div className={`col-md-${columns} my-3`} key={i}>
               <Skeleton height={200} className="w-100 mb-2 rounded" />
               <Skeleton count={2} />
@@ -44,7 +52,9 @@ const CommonHome = ({ name, start, skip = 4, columns = 6, extras = "" }) => {
             </div>
           ))}
       </div>
-      <LoadMore disabled={loading} click={handleClick} />
+      {!loading && hasMore && (
+        <LoadMore disabled={loading} click={handleClick} />
+      )}
     </div>
   );
 };
