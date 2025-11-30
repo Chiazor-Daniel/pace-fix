@@ -96,23 +96,23 @@ const About = () => {
       <div className="container my-5 py-5">
         {/* About Section */}
         <section className="mb-5">
-          <h1 className="fw-bold text-uppercase mb-5" style={{ fontFamily: 'inherit' }}>About Pacesetter Frontier Magazine</h1>
+          <h1 className="fw-bold text-uppercase mb-5">About Pacesetter Frontier Magazine</h1>
 
           <div className="row">
             <div className="col-lg-8">
-              <p className="lead" style={{ fontFamily: 'inherit', fontSize: '1.1rem', lineHeight: '1.6' }}>
+              <p className="lead">
                 Pacesetter Frontier Magazine is a privately owned, quarterly published, multimedia, multi-connect,
                 cosmopolitan, print and online Magazine established in 2020 with a market audience cutting across states
                 of Nigeria, the nation's capital – Abuja, and diaspora communities.
               </p>
 
-              <p style={{ fontFamily: 'inherit', fontSize: '1rem', lineHeight: '1.6' }}>
+              <p>
                 Our interests are across multiple sectors from Politics, News, Economy, Religion and Education to
                 Lifestyle, Culture, Women, Health, Events, etc. Our editions are the Easter, Democracy, Independence and
                 Christmas/New Year editions.
               </p>
 
-              <p className="fw-bold" style={{ fontFamily: 'inherit', fontSize: '1rem', lineHeight: '1.6' }}>
+              <p className="fw-bold">
                 The Magazine is a leading electronic and print media committed to making a stride in time. Pacesetter
                 Frontier cares about quality content, making us one of the widely read magazines you can find around.
               </p>
@@ -164,10 +164,10 @@ const About = () => {
                       <a href="#" className="text-primary fs-4">
                         <FaFacebook />
                       </a>
-                      <a href="#" className="text-dark fs-4">
+                      <a href="https://x.com/pacefrontier?t=Qwc_E5t52eq1beAyuXMdmw&s=09" className="text-dark fs-4" target="_blank" rel="noreferrer">
                         <FaXTwitter />
                       </a>
-                      <a href="#" className="text-danger fs-4">
+                      <a href="https://www.instagram.com/frontierdiscourse?igsh=MTgyaW9la21pcGtpMg==" className="text-danger fs-4" target="_blank" rel="noreferrer">
                         <FaInstagram />
                       </a>
                       <a href="#" className="text-danger fs-4">

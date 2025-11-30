@@ -1,6 +1,7 @@
 "use client"
 
-import { useParams, useEffect } from "next/navigation"
+import { useParams } from "next/navigation"
+import { useEffect } from "react"
 
 import { Layout } from ".."
 import { Common } from "../../components"
@@ -9,7 +10,11 @@ const Search = () => {
   // Get search term
   let { term } = useParams()
   // Adding this for backward compatibility
-  term = term.split("-", 5).join(" ")
+  if (term) {
+    term = term.split("-", 5).join(" ")
+  } else {
+    term = ""
+  }
 
   // Log search term for analytics and SEO (non-blocking)
   useEffect(() => {
@@ -51,7 +56,7 @@ const Search = () => {
             })
           }}
         />
-        
+
         <Common name={term} start={0} skip={12} columns={4} extras={term} />
       </div>
     </Layout>

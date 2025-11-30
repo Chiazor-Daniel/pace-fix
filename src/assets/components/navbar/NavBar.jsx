@@ -39,8 +39,8 @@ const NavBar = () => {
             <Image
               src="/top-logo.png"
               alt="Pacesetter Frontier Magazine"
-              height={30}
-              width={100}
+              height={60}
+              width={200}
               priority
               className="img-fluid"
             />
@@ -65,8 +65,8 @@ const NavBar = () => {
                               address.link
                                 ? address.link
                                 : item.name.toLowerCase() === "columns"
-                                  ? `/category/${address.name}`
-                                  : `/${address.name}`
+                                  ? `/category/${address.name.toLowerCase().replace(/\s+/g, '-')}`
+                                  : `/${address.name.toLowerCase().replace(/\s+/g, '-')}`
                             }
                             className="text-capitalize my-dropdown-item"
                             target={address.link ? `_blank` : undefined}

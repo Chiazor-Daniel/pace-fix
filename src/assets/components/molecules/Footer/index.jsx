@@ -17,7 +17,11 @@ const Footer = () => {
 
             <p className="text-center mt-5">
               <Link href={"/"}>
-                <img src={"/png.png"} alt="Pacesetter Bottom Logo" width={300} />
+                <img src={"/footer_logo.jpg"} alt="Pacesetter Bottom Logo" width={300} style={
+                  {
+                    borderRadius: "10px"
+                  }
+                } />
               </Link>
             </p>
 
@@ -37,15 +41,16 @@ const Footer = () => {
       </div>
       <div className="credit text-white text-center fs-12">
         <p className="mt-5 w-75 m-auto">
-          All Rights Reserved | Pacesetter Frontier Magazine | Design by{" "}
-          <a
+
+          {/* <a
             href="https://mark-eke.netlify.app"
             className="text-warning fw-bold text-decoration-none"
             rel="noreferrer"
             target="_blank"
           >
             Karm
-          </a>{" "}
+          </a>{" "} */}
+          ©Frontpace Communications Limited
         </p>
         <p className="my-4">
           Follow us on all Social Platforms{" "}

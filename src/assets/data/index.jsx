@@ -1,10 +1,10 @@
 import {
   FaFacebookF,
-    FaX,
+  FaX,
   FaInstagram,
   FaWhatsapp,
   FaFacebookMessenger,
-    FaThreads
+  FaThreads
 } from "react-icons/fa6";
 import { PiTelegramLogoBold } from "react-icons/pi";
 
@@ -22,7 +22,7 @@ export const socials = [
   },
   {
     icon: <FaX />,
-    link: "https://twitter.com/pacesetterfrontier",
+    link: "https://x.com/pacefrontier?t=Qwc_E5t52eq1beAyuXMdmw&s=09",
     name: "Twitter",
     shareLink: "https://twitter.com/share?url=",
     word: "follow",
@@ -40,7 +40,7 @@ export const socials = [
   },
   {
     name: "Instagram",
-    link: "https://www.instagram.com/pacesetterfrontier/",
+    link: "https://www.instagram.com/frontierdiscourse?igsh=MTgyaW9la21pcGtpMg==",
     icon: <FaInstagram />,
     word: "follow",
     pill_class: "btn-outline-secondary",
@@ -92,39 +92,39 @@ export { simpleSocials, shareSocials };
 
 export const navMenu = [
   {
-    name: "welcome",
+    name: "Welcome",
     link: "",
   },
   {
-    name: "about us",
+    name: "About Us",
     link: "about-us",
   },
   {
-    name: "columns",
+    name: "Columns",
     links: [
       {
-        name: "entertainment",
+        name: "Entertainment",
       },
       {
-        name: "fashion",
+        name: "Fashion",
       },
       {
-        name: "business-economy",
+        name: "Business & Economy",
       },
       {
-        name: "lifestyle",
+        name: "Lifestyle",
       },
     ],
   },
   {
-    name: "download magazines",
+    name: "Download Magazines",
     links: [
       {
-        name: "democracy edition",
+        name: "Democracy Edition",
         link: "https://paystack.com/pay/the-pacesetter-frontier-may-2023-magazine",
       },
       {
-        name: "xmas/new year edition",
+        name: "Xmas/New Year Edition",
         link: "https://paystack.com/pay/the-pacesetter-frontier-may-2023-magazine",
       },
       {
@@ -134,10 +134,10 @@ export const navMenu = [
     ],
   },
   {
-    name: "policies",
-    links: [{ name: "privacy-policy" }, { name: "terms-and-conditions" }],
+    name: "Policies",
+    links: [{ name: "Privacy Policy" }, { name: "Terms and Conditions" }],
   },
- 
+
 ];
 
 export const Categories = {
