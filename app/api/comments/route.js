@@ -1,15 +1,15 @@
-import { getCommentsCollection } from '../../../utils/mongodb.js';
+import { getCommentsCollection } from "../../../utils/mongodb.js";
 
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const postId = searchParams.get('postId');
-    const page = parseInt(searchParams.get('page')) || 1;
-    const limit = parseInt(searchParams.get('limit')) || 10;
+    const postId = searchParams.get("postId");
+    const page = parseInt(searchParams.get("page")) || 1;
+    const limit = parseInt(searchParams.get("limit")) || 10;
     const skip = (page - 1) * limit;
 
     const collection = await getCommentsCollection();
-    
+
     let query = { isApproved: true };
     if (postId) {
       query.postId = postId;
@@ -31,14 +31,17 @@ export async function GET(request) {
         page,
         limit,
         total,
-        pages: Math.ceil(total / limit)
-      }
+        pages: Math.ceil(total / limit),
+      },
     });
   } catch (error) {
-    console.error('Error fetching comments:', error);
-    return Response.json({
-      error: 'Internal server error'
-    }, { status: 500 });
+    console.error("Error fetching comments:", error);
+    return Response.json(
+      {
+        error: "Internal server error",
+      },
+      { status: 500 },
+    );
   }
 }
 
@@ -48,13 +51,16 @@ export async function POST(request) {
     const { postId, authorName, authorEmail, content, parentId } = body;
 
     if (!postId || !authorName || !authorEmail || !content) {
-      return Response.json({
-        error: 'Post ID, author name, email, and content are required'
-      }, { status: 400 });
+      return Response.json(
+        {
+          error: "Post ID, author name, email, and content are required",
+        },
+        { status: 400 },
+      );
     }
 
     const collection = await getCommentsCollection();
-    
+
     const comment = {
       postId,
       authorName,
@@ -63,21 +69,24 @@ export async function POST(request) {
       parentId: parentId || null,
       isApproved: false, // Comments need approval
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     const result = await collection.insertOne(comment);
 
     return Response.json({
       success: true,
-      message: 'Comment submitted successfully. It will be reviewed before being published.',
-      data: { id: result.insertedId }
+      message:
+        "Comment submitted successfully. It will be reviewed before being published.",
+      data: { id: result.insertedId },
     });
   } catch (error) {
-    console.error('Error creating comment:', error);
-    return Response.json({
-      error: 'Internal server error'
-    }, { status: 500 });
+    console.error("Error creating comment:", error);
+    return Response.json(
+      {
+        error: "Internal server error",
+      },
+      { status: 500 },
+    );
   }
 }
-

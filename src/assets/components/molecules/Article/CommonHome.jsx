@@ -15,7 +15,7 @@ const CommonHome = ({ name, start, skip = 4, columns = 6, extras = "" }) => {
   const categoryId = getKeyByValue(Categories, name) ?? 6;
   const url = extras.trim()
     ? `${process.env.NEXT_PUBLIC_API_URL}posts?search=${extras}&per_page=16`
-    : `${process.env.NEXT_PUBLIC_API_URL}posts?categories=${categoryId}&per_page=40`;
+    : `${process.env.NEXT_PUBLIC_API_URL}posts?categories=${categoryId}&per_page=12`;
 
   const [begin, setBegin] = useState(start);
   const { loading, data } = UseFetch(url, `posts_${name}`); // 👈 fetch immediately
@@ -33,16 +33,16 @@ const CommonHome = ({ name, start, skip = 4, columns = 6, extras = "" }) => {
       <div className="py-4 row">
         {loading
           ? Array.from({ length: skip }).map((_, i) => (
-            <div className={`col-md-${columns} my-3`} key={i}>
-              <Skeleton height={200} className="w-100 mb-2 rounded" />
-              <Skeleton count={2} />
-            </div>
-          ))
+              <div className={`col-md-${columns} my-3`} key={i}>
+                <Skeleton height={200} className="w-100 mb-2 rounded" />
+                <Skeleton count={2} />
+              </div>
+            ))
           : visiblePosts.map((item) => (
-            <div className={`col-md-${columns} my-3`} key={item.id}>
-              <VerticalSegment {...item} catName={name} item={item} />
-            </div>
-          ))}
+              <div className={`col-md-${columns} my-3`} key={item.id}>
+                <VerticalSegment {...item} catName={name} item={item} />
+              </div>
+            ))}
       </div>
       <LoadMore disabled={loading} click={handleClick} />
     </div>
