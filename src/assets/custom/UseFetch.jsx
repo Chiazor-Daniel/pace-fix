@@ -11,15 +11,18 @@ const fetcher = async (url) => {
 const useFetch = (url) => {
   const { data, error, isLoading } = useSWR(url, fetcher, {
     revalidateOnFocus: false,
-    revalidateOnReconnect: true,
-    dedupingInterval: 300000, // Cache for 5 minutes
+    revalidateOnReconnect: false,
+    dedupingInterval: 600000, // Cache for 10 minutes
     shouldRetryOnError: false,
+    revalidateIfStale: false, // Don't auto-revalidate stale data
+    focusThrottleInterval: 300000, // Throttle focus revalidation to 5 minutes
+    keepPreviousData: true, // Keep showing old data while fetching new
   });
 
   return {
     data: Array.isArray(data) ? data : [],
     loading: isLoading,
-    error: error ? (error.message || "Something went wrong") : null,
+    error: error ? error.message || "Something went wrong" : null,
   };
 };
 
