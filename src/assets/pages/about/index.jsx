@@ -131,7 +131,7 @@ const About = () => {
 
           <div className="row">
             <div className="col-lg-8">
-              <p className="lead">
+              <p>
                 Pacesetter Frontier Magazine is a privately owned, quarterly
                 published, multimedia, multi-connect, cosmopolitan, print and
                 online Magazine established in 2020 with a market audience

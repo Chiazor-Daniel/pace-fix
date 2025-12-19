@@ -39,8 +39,8 @@ const NavBar = () => {
             <Image
               src="/top-logo.png"
               alt="Pacesetter Frontier Magazine"
-              height={60}
-              width={200}
+              height={80}
+              width={260}
               priority
               className="img-fluid"
             />

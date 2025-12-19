@@ -161,7 +161,7 @@ export const Categories = {
   972: "Press Release",
   1018: "Crime",
   1019: "African News",
-  1134: "Foreign",
+  1134: "World News",
   1142: "Tragedy",
   1169: "Legal",
   1326: "Religion",
