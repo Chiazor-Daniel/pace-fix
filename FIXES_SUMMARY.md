@@ -2,7 +2,12 @@
 
 ## ✅ Completed Fixes
 
-### 1. Performance Optimization 🚀
+### 1. Build Fix 🛠️
+- **Issue**: Vercel build failed due to lockfile mismatch (`ERR_PNPM_OUTDATED_LOCKFILE`)
+- **Fix**: Updated `package.json` to use `axios: "latest"` to match `pnpm-lock.yaml`
+- **File**: `package.json`
+
+### 2. Performance Optimization 🚀
 - **Issue**: Homepage was slow to load, especially when navigating back
 - **Fix**: Replaced custom `UseFetch` implementation with **SWR (Stale-While-Revalidate)**
   - **Caching**: Data is now cached in memory for **5 minutes**, making navigation back to homepage **instant**
@@ -10,7 +15,7 @@
   - **Revalidation**: Keeps data fresh without blocking the UI
 - **File**: `src/assets/custom/UseFetch.jsx`
 
-### 2. Menu Update
+### 3. Menu Update
 - **Issue**: "About Us" menu needed to be "About Us/Contact Us" without submenu
 - **Fix**: Updated menu item:
   - Label: **About Us/Contact Us**
@@ -18,24 +23,24 @@
   - Removed dropdown/submenu as requested
 - **File**: `src/assets/data/index.jsx`
 
-### 3. Header Logo Size
+### 4. Header Logo Size
 - **Issue**: Logo was too small, especially on mobile
 - **Fix**: Increased logo dimensions further to **80x260 pixels**
 - **File**: `src/assets/components/navbar/NavBar.jsx`
 
-### 4. Category IDs Correction
+### 5. Category IDs Correction
 - **Issue**: African News and World News need to map to correct IDs (1019 & 1134)
 - **Fix**: 
   - Verified `African News` (`1019`) was correct
   - Updated `Foreign` (`1134`) to `World News` to match component usage
 - **File**: `src/assets/data/index.jsx`
 
-### 5. About Us Fonts Uniformity
+### 6. About Us Fonts Uniformity
 - **Issue**: First paragraph had different font style
 - **Fix**: Removed `lead` class from first paragraph so all text is uniform
 - **File**: `src/assets/pages/about/index.jsx`
 
-### 6. Social Media Links
+### 7. Social Media Links
 - **Issue**: Incorrect X & Instagram links
 - **Fix**: Updated to correct URLs:
   - X (Twitter): `https://x.com/pacefrontier?t=Qwc_E5t52eq1beAyuXMdmw&s=09`
@@ -45,7 +50,7 @@
   - `src/assets/pages/about/index.jsx`
   - `src/assets/pages/contact/index.jsx`
 
-### 7. About Us / Contact Us Headings
+### 8. About Us / Contact Us Headings
 - **Issue**: Needed proper headings and capitalization
 - **Fix**: 
   - About Us page now has "About Pacesetter Frontier Magazine" heading
@@ -57,28 +62,28 @@
   - `src/assets/data/index.jsx`
   - `src/assets/components/navbar/NavBar.jsx`
 
-### 8. Footer Logo
+### 9. Footer Logo
 - **Issue**: Wrong logo color (black background needs white logo)
 - **Fix**: 
   - Added white logo as `public/footer_logo.jpg`
   - Updated footer to use white logo
 - **File**: `src/assets/components/molecules/Footer/index.jsx`
 
-### 9. Load More Functionality
+### 10. Load More Functionality
 - **Issue**: Only loading one item instead of four on each click
 - **Fix**: 
   - Increased API per_page limit from 5 to 40
   - Load More button now properly loads 4 more items on each click
 - **File**: `src/assets/components/molecules/Article/CommonHome.jsx`
 
-### 10. Search Functionality Fix
+### 11. Search Functionality Fix
 - **Issue**: Application error on Vercel (client-side exception)
 - **Fix**: 
   - Fixed incorrect import (useEffect should be from 'react', not 'next/navigation')
   - Added null check for term parameter to prevent undefined errors
 - **File**: `src/assets/pages/search/index.jsx`
 
-### 11. Recent News Sorting (Reverted)
+### 12. Recent News Sorting (Reverted)
 - **Status**: Reverted to original behavior (most recent first) as requested
 - **Files**: 
   - `src/assets/components/sliders/Latest.jsx`
@@ -94,14 +99,15 @@
 
 ## 🔧 Files Modified
 
-1. `src/assets/custom/UseFetch.jsx`
-2. `src/assets/data/index.jsx`
-3. `src/assets/components/navbar/NavBar.jsx`
-4. `src/assets/pages/about/index.jsx`
-5. `src/assets/pages/contact/index.jsx`
-6. `src/assets/pages/search/index.jsx`
-7. `src/assets/components/molecules/Article/CommonHome.jsx`
-8. `src/assets/components/molecules/Footer/index.jsx`
-9. `src/assets/components/sliders/Latest.jsx`
-10. `src/assets/components/molecules/Article/SideMain.jsx`
-11. `public/footer_logo.jpg`
+1. `package.json`
+2. `src/assets/custom/UseFetch.jsx`
+3. `src/assets/data/index.jsx`
+4. `src/assets/components/navbar/NavBar.jsx`
+5. `src/assets/pages/about/index.jsx`
+6. `src/assets/pages/contact/index.jsx`
+7. `src/assets/pages/search/index.jsx`
+8. `src/assets/components/molecules/Article/CommonHome.jsx`
+9. `src/assets/components/molecules/Footer/index.jsx`
+10. `src/assets/components/sliders/Latest.jsx`
+11. `src/assets/components/molecules/Article/SideMain.jsx`
+12. `public/footer_logo.jpg`
