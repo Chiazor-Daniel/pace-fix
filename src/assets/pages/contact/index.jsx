@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import axios from "axios"
-import { useState } from "react"
-import { ToastContainer, toast } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
+import axios from "axios";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   FaPaperPlane,
   FaPhone,
@@ -14,79 +14,81 @@ import {
   FaInstagram,
   FaYoutube,
   FaThreads,
-} from "react-icons/fa6"
+} from "react-icons/fa6";
 
-import { Layout } from ".."
-import "./style.css"
+import { Layout } from "..";
+import "./style.css";
 
 const Contact = () => {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [subject, setSubject] = useState("")
-  const [message, setMessage] = useState("")
-  const [isAdvertisement, setIsAdvertisement] = useState(false)
-  const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}email/`
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [isAdvertisement, setIsAdvertisement] = useState(false);
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}email/`;
 
   const HandleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!name) {
-      toast.error("Name wasn't provided.")
-      return
+      toast.error("Name wasn't provided.");
+      return;
     }
     if (!email) {
-      toast.error("Email Address wasn't provided.")
-      return
+      toast.error("Email Address wasn't provided.");
+      return;
     }
     if (!message) {
-      toast.error("Message wasn't provided.")
-      return
+      toast.error("Message wasn't provided.");
+      return;
     }
 
     const emailData = {
       full_name: name,
       email_address: email,
       subject: isAdvertisement ? `[ADVERTISEMENT] ${subject}` : subject,
-      message: isAdvertisement ? `ADVERTISEMENT INQUIRY:\n\n${message}` : message,
+      message: isAdvertisement
+        ? `ADVERTISEMENT INQUIRY:\n\n${message}`
+        : message,
       type: isAdvertisement ? "advertisement" : "general",
-    }
+    };
 
     // Make a call to the backend contact api.
     axios
       .post(url, emailData)
       .then((res) => {
         // Send toast message and clear form.
-        toast.success("Message Sent Successfully!")
-        setName("")
-        setMessage("")
-        setSubject("")
-        setEmail("")
-        setIsAdvertisement(false)
+        toast.success("Message Sent Successfully!");
+        setName("");
+        setMessage("");
+        setSubject("");
+        setEmail("");
+        setIsAdvertisement(false);
       })
       .catch((err) => {
-        console.error("Contact form error:", err)
-        const details = err.response?.data
-        const status = err.response?.status
+        console.error("Contact form error:", err);
+        const details = err.response?.data;
+        const status = err.response?.status;
 
         if (status !== 200) {
-          toast.warning(`Error: ${err.message}`)
+          toast.warning(`Error: ${err.message}`);
           if (typeof details === "object" && details) {
             // Loop through object
             for (const detailsKey in details) {
-              const message = `${detailsKey}: ${details[detailsKey]}`
-              toast.warning(message)
+              const message = `${detailsKey}: ${details[detailsKey]}`;
+              toast.warning(message);
             }
           }
         } else {
-          toast.success("Message Sent Successfully!")
+          toast.success("Message Sent Successfully!");
           //   Clear form
-          setEmail("")
-          setMessage("")
-          setName("")
-          setSubject("")
-          setIsAdvertisement(false)
+          setEmail("");
+          setMessage("");
+          setName("");
+          setSubject("");
+          setIsAdvertisement(false);
         }
-      })
-  }
+      });
+  };
 
   return (
     <Layout>
@@ -97,9 +99,10 @@ const Contact = () => {
           <div className="row">
             <div className="col-lg-8 mx-auto">
               <div className="text-center mb-5">
-                <h1 className="fw-bold mb-4">Contact Information</h1>
+                <h1 className="fw-bold mb-4">Contact Us</h1>
                 <p className="lead">
-                  Ready to advertise with us or have a general inquiry? We'd love to hear from you.
+                  Ready to advertise with us or have a general inquiry? We'd
+                  love to hear from you.
                 </p>
               </div>
 
@@ -110,7 +113,10 @@ const Contact = () => {
                     <div className="card-body text-center">
                       <FaMapLocation className="fs-1 text-primary mb-3" />
                       <h5 className="fw-bold">Southern Bureau</h5>
-                      <p className="mb-0">16-18 Chief Emeka Ebila Street, Off Eso Bus Stop, Agbani Road, Enugu</p>
+                      <p className="mb-0">
+                        16-18 Chief Emeka Ebila Street, Off Eso Bus Stop, Agbani
+                        Road, Enugu
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -119,7 +125,10 @@ const Contact = () => {
                     <div className="card-body text-center">
                       <FaMapLocation className="fs-1 text-success mb-3" />
                       <h5 className="fw-bold">Northern Bureau</h5>
-                      <p className="mb-0">93A Kwame Nkrumah Crescent, By ECOWAS Secretariat, Asokoro, Abuja</p>
+                      <p className="mb-0">
+                        93A Kwame Nkrumah Crescent, By ECOWAS Secretariat,
+                        Asokoro, Abuja
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -132,12 +141,18 @@ const Contact = () => {
                       <FaPhone className="fs-1 text-danger mb-3" />
                       <h5 className="fw-bold">Phone</h5>
                       <p className="mb-1">
-                        <a href="tel:+2349137940957" className="text-decoration-none">
+                        <a
+                          href="tel:+2349137940957"
+                          className="text-decoration-none"
+                        >
                           09137940957
                         </a>
                       </p>
                       <p className="mb-0">
-                        <a href="tel:+2348184441324" className="text-decoration-none">
+                        <a
+                          href="tel:+2348184441324"
+                          className="text-decoration-none"
+                        >
                           08184441324
                         </a>
                       </p>
@@ -150,13 +165,19 @@ const Contact = () => {
                       <FaSquareEnvelope className="fs-1 text-warning mb-3" />
                       <h5 className="fw-bold">Email</h5>
                       <p className="mb-1">
-                        <a href="mailto:admin@pacesetterfrontier.com" className="text-decoration-none">
+                        <a
+                          href="mailto:admin@pacesetterfrontier.com"
+                          className="text-decoration-none"
+                        >
                           admin@pacesetterfrontier.com
                         </a>
                       </p>
                       <p className="mb-0 small text-muted">
                         Ads:{" "}
-                        <a href="mailto:thepacesetter03@gmail.com" className="text-decoration-none">
+                        <a
+                          href="mailto:thepacesetter03@gmail.com"
+                          className="text-decoration-none"
+                        >
                           thepacesetter03@gmail.com
                         </a>
                       </p>
@@ -173,10 +194,20 @@ const Contact = () => {
                     <FaFacebook className="me-2" />
                     Facebook
                   </a>
-                  <a href="https://x.com/pacefrontier?t=Qwc_E5t52eq1beAyuXMdmw&s=09" className="btn btn-outline-dark btn-sm" target="_blank" rel="noreferrer">
+                  <a
+                    href="https://x.com/pacefrontier?t=Qwc_E5t52eq1beAyuXMdmw&s=09"
+                    className="btn btn-outline-dark btn-sm"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <FaXTwitter className="me-2" />X (Twitter)
                   </a>
-                  <a href="https://www.instagram.com/frontierdiscourse?igsh=MTgyaW9la21pcGtpMg==" className="btn btn-outline-danger btn-sm" target="_blank" rel="noreferrer">
+                  <a
+                    href="https://www.instagram.com/frontierdiscourse?igsh=MTgyaW9la21pcGtpMg=="
+                    className="btn btn-outline-danger btn-sm"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <FaInstagram className="me-2" />
                     Instagram
                   </a>
@@ -194,7 +225,9 @@ const Contact = () => {
               {/* Contact Form */}
               <div className="card shadow">
                 <div className="card-body">
-                  <h3 className="fw-bold mb-4 text-center">Send Us a Message</h3>
+                  <h3 className="fw-bold mb-4 text-center">
+                    Send Us a Message
+                  </h3>
 
                   <form onSubmit={HandleSubmit} className="contactForm">
                     <div className="row">
@@ -251,13 +284,17 @@ const Contact = () => {
                           checked={isAdvertisement}
                           onChange={(e) => setIsAdvertisement(e.target.checked)}
                         />
-                        <label className="form-check-label fw-bold text-success" htmlFor="isAdvertisement">
+                        <label
+                          className="form-check-label fw-bold text-success"
+                          htmlFor="isAdvertisement"
+                        >
                           This is an advertisement inquiry
                         </label>
                       </div>
                       {isAdvertisement && (
                         <small className="text-muted">
-                          Your message will be forwarded to our advertising team for priority handling.
+                          Your message will be forwarded to our advertising team
+                          for priority handling.
                         </small>
                       )}
                     </div>
@@ -282,7 +319,10 @@ const Contact = () => {
                     </div>
 
                     <div className="d-grid">
-                      <button type="submit" className="btn btn-danger btn-lg fw-bold">
+                      <button
+                        type="submit"
+                        className="btn btn-danger btn-lg fw-bold"
+                      >
                         <FaPaperPlane className="me-2" />
                         Send Message
                       </button>
@@ -298,9 +338,13 @@ const Contact = () => {
                   Advertise With Us
                 </h5>
                 <p className="mb-0">
-                  We offer electronic and print media ads with unique market control and edge. For advertising
-                  inquiries, contact our ad team directly at{" "}
-                  <a href="mailto:thepacesetter03@gmail.com" className="alert-link">
+                  We offer electronic and print media ads with unique market
+                  control and edge. For advertising inquiries, contact our ad
+                  team directly at{" "}
+                  <a
+                    href="mailto:thepacesetter03@gmail.com"
+                    className="alert-link"
+                  >
                     thepacesetter03@gmail.com
                   </a>{" "}
                   or call{" "}
@@ -315,7 +359,7 @@ const Contact = () => {
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;

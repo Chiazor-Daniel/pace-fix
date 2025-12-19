@@ -4,7 +4,7 @@ import {
   FaInstagram,
   FaWhatsapp,
   FaFacebookMessenger,
-  FaThreads
+  FaThreads,
 } from "react-icons/fa6";
 import { PiTelegramLogoBold } from "react-icons/pi";
 
@@ -85,7 +85,7 @@ shareSocials.push(
     link: "https://wa.link/oro1b3",
     name: "Telegram",
     shareLink: "tg://msg?text=",
-  }
+  },
 );
 
 export { simpleSocials, shareSocials };
@@ -137,7 +137,6 @@ export const navMenu = [
     name: "Policies",
     links: [{ name: "Privacy Policy" }, { name: "Terms and Conditions" }],
   },
-
 ];
 
 export const Categories = {
@@ -162,7 +161,7 @@ export const Categories = {
   972: "Press Release",
   1018: "Crime",
   1019: "African News",
-  1134: "Foreign",
+  1134: "World News",
   1142: "Tragedy",
   1169: "Legal",
   1326: "Religion",
