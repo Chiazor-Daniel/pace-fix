@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
 // Reusable Adsense Ad component
-function AdsenseAd({ dataAdSlot, style, className = "", adFormat = "auto", fullWidth = true }) {
+function AdsenseAd({ dataAdSlot, style, className = "", adFormat = "horizontal, rectangle", fullWidth = false }) {
   const adRef = useRef(null);
 
   useEffect(() => {
@@ -15,22 +15,24 @@ function AdsenseAd({ dataAdSlot, style, className = "", adFormat = "auto", fullW
   }, []);
 
   return (
-    <ins
-      className={`adsbygoogle ${className}`}
-      style={style || { display: "block" }}
-      data-ad-client="ca-pub-3536158399576400"
-      data-ad-slot={dataAdSlot}
-      data-ad-format={adFormat}
-      data-full-width-responsive={fullWidth ? "true" : "false"}
-      ref={adRef}
-    />
+    <div style={{ overflow: "hidden", clear: "both", margin: "10px 0" }}>
+      <ins
+        className={`adsbygoogle ${className}`}
+        style={style || { display: "block" }}
+        data-ad-client="ca-pub-3536158399576400"
+        data-ad-slot={dataAdSlot}
+        data-ad-format={adFormat}
+        data-full-width-responsive={fullWidth ? "true" : "false"}
+        ref={adRef}
+      />
+    </div>
   );
 }
 
 // Sidebar (desktop)
 export const SidebarAd = () => (
   <div className="my-4" data-ad-location="sidebar">
-    <AdsenseAd dataAdSlot="9096348399" />
+    <AdsenseAd dataAdSlot="9096348399" adFormat="auto" />
   </div>
 );
 
@@ -52,13 +54,5 @@ export const InContentAd = () => (
 export const EndOfArticleAd = () => (
   <div className="my-4" data-ad-location="end-of-article">
     <AdsenseAd dataAdSlot="7380011854" />
-  </div>
-);
-
-// Sticky mobile footer
-export const StickyMobileFooterAd = () => (
-  <div className="fixed-bottom d-md-none shadow-lg text-center bg-white" style={{ zIndex: 1000, minHeight: '50px', borderTop: '1px solid #ddd' }} data-ad-location="sticky-mobile-footer">
-    <div style={{ fontSize: '10px', color: '#999', padding: '2px' }}>Advertisement</div>
-    <AdsenseAd dataAdSlot="9096348399" />
   </div>
 );

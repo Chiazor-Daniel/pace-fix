@@ -7,7 +7,7 @@ import "react-loading-skeleton/dist/skeleton.css"
 
 import { Layout } from ".."
 import SideBar from "./SideBar"
-import { SidebarAd, EndOfArticleAd, StickyMobileFooterAd } from "../../components/AdsPlacements"
+import { SidebarAd, EndOfArticleAd } from "../../components/AdsPlacements"
 import {
   Adverts, Disclaimer, PostTitle, Sharers, SimpleSharers,
   BottomRecent, ArticleTitle, CommentDetails, WhatsappChannel,
@@ -179,7 +179,6 @@ const PostPage = () => {
           </div>
         </div>
       </div>
-      <StickyMobileFooterAd />
     </Layout>
   )
 }
