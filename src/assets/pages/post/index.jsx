@@ -19,7 +19,6 @@ import { Tags } from "../../data"
 import AltImage from "../../images/backup-img.jpg"
 import { UseFetchObject, SocialPreviews } from "../../custom"
 import { useParams } from "next/navigation"
-import { InContentCustomAd } from "@/components/CustomAdManager"
 import GoogleAd from "@/app/googleAd/ad"
 
 const insertAds = (htmlContent) => {
@@ -33,30 +32,15 @@ const insertAds = (htmlContent) => {
       result.push(<div key={`p-${index}`} dangerouslySetInnerHTML={{ __html: p + '</p>' }} />);
     }
 
-    // Inject ad after every 4th paragraph to avoid overwhelming content
-    if ((index + 1) % 4 === 0 && index !== paragraphs.length - 1 && index > 0) {
-      const isEven = (index + 1) % 8 === 0;
+    // Inject Google Ad once after the 4th paragraph
+    if (index === 3 && paragraphs.length > 4) {
       result.push(
-        <div key={`ad-${index}`} className="my-4 text-center border-top border-bottom py-3 bg-light">
-          <small className="text-muted d-block mb-2">Advertisement</small>
-          {isEven ? (
-            <GoogleAd dataAdSlot="7380011854" />
-          ) : (
-            <InContentCustomAd />
-          )}
+        <div key={`ad-${index}`} className="my-4 text-center">
+          <GoogleAd dataAdSlot="7380011854" />
         </div>
       );
     }
   });
-
-  // Only add final ad if content is very long (more than 8 paragraphs)
-  if (paragraphs.length > 8) {
-    result.push(
-      <div key="ad-final" className="my-4 text-center">
-        <GoogleAd dataAdSlot="7380011854" />
-      </div>
-    );
-  }
 
   return result;
 }
@@ -128,9 +112,13 @@ const PostPage = () => {
         image={yoast_head_json.og_image?.[0]?.url}
       />
 
-      <div className="container my-5">
-        <div className="container mt-4">
-          <AdsSliderStrip />
+      <div className="container mt-4 mb-2">
+        <AdsSliderStrip />
+      </div>
+
+      <div className="container my-4">
+        <div className="d-flex justify-content-center align-items-center mb-4" suppressHydrationWarning>
+          <GoogleAd dataAdSlot="9096348399" />
         </div>
         <div className="row">
           <div className="col-md-9">

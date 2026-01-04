@@ -5,6 +5,7 @@ import { HandleWidth, UseFetch } from "../../custom"
 import { Preloader } from "../../components/loaders"
 import { TopHero, AdsSliderStrip } from "../../components"
 import { usePostContext } from "../../context"
+import GoogleAd from "@/app/googleAd/ad"
 
 const HeroSlider = () => {
   const width = HandleWidth()
@@ -41,6 +42,10 @@ const HeroSlider = () => {
   return (
     <div className="my-5">
       <AdsSliderStrip />
+
+      <div className="mb-4 text-center">
+        <GoogleAd dataAdSlot="9096348399" />
+      </div>
 
       {/* --- Hero Post Slider --- */}
       <Slider {...sliderSettings}>
