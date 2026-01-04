@@ -96,28 +96,51 @@ export const navMenu = [
     link: "",
   },
   {
-    name: "About Us/Contact Us",
+    name: "News",
+    link: "category/news",
+  },
+  {
+    name: "Politics",
+    link: "category/politics",
+  },
+  {
+    name: "Business & Economy",
+    link: "category/business-economy",
+  },
+  {
+    name: "Tech",
+    link: "category/tech",
+  },
+  {
+    name: "Sports",
+    link: "category/sports",
+  },
+  {
+    name: "Entertainment",
+    link: "category/entertainment",
+  },
+  {
+    name: "Fashion",
+    link: "category/fashion",
+  },
+  {
+    name: "Lifestyle",
+    link: "category/lifestyle",
+  },
+  {
+    name: "Health",
+    link: "category/health",
+  },
+  {
+    name: "Opinion",
+    link: "category/opinion",
+  },
+  {
+    name: "About",
     link: "about-us",
   },
   {
-    name: "Columns",
-    links: [
-      {
-        name: "Entertainment",
-      },
-      {
-        name: "Fashion",
-      },
-      {
-        name: "Business & Economy",
-      },
-      {
-        name: "Lifestyle",
-      },
-    ],
-  },
-  {
-    name: "Download Magazines",
+    name: "Magazines",
     links: [
       {
         name: "Democracy Edition",

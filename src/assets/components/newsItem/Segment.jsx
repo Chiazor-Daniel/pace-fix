@@ -228,7 +228,7 @@ export const LittlePieceSegment = ({
             className="pointer"
             onClick={handlePostClick}
           />
-          <ViewComment views={views} />
+          {/* <ViewComment views={views} /> */}
         </div>
       </div>
     </>

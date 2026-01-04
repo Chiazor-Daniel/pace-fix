@@ -16,7 +16,7 @@ const HeroSlider = () => {
   const { loading, data } = UseFetch(url, "posts")
 
   const slidesToShow = width < 800 ? 1 : width < 1000 ? 2 : 3
-  
+
   const sliderSettings = {
     dots: true,
     infinite: true,

@@ -92,7 +92,7 @@ export const BottomRecent = ({ categories }) => {
   const category = getCategory(categories)
   const width = HandleWidth()
   // fetch post if it doesn't already exist
-  const url = `${process.env.REACT_APP_API_URL}posts?categories=${category.id}&per_page=16`
+  const url = `${process.env.NEXT_PUBLIC_API_URL}posts?categories=${category.id}&per_page=16`
   const { loading, data } = UseFetch(url, `posts_${category.name}`)
   if (loading)
     return (

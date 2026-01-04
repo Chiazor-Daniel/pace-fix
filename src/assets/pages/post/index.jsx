@@ -18,15 +18,33 @@ import { Tags } from "../../data"
 import AltImage from "../../images/backup-img.jpg"
 import { UseFetchObject, SocialPreviews } from "../../custom"
 import { useParams } from "next/navigation"
+import { InContentCustomAd } from "@/components/CustomAdManager"
 import GoogleAd from "@/app/googleAd/ad"
 
-const addGoogleAds = (paragraphs) => {
-  const scripts = [
-    `<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3536158399576400" data-ad-slot="9096348399" data-ad-format="auto"></ins>`,
-    `<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3536158399576400" data-ad-slot="7380011854" data-ad-format="auto"></ins>`
-  ]
-  let count = 0
-  return paragraphs.map((p, i) => i % 4 === 0 ? `${p}<div class="ad-container">${scripts[count++ % 2]}</div>` : p)
+const insertAds = (htmlContent) => {
+  if (!htmlContent) return [];
+
+  // Split by closing paragraph tag
+  const paragraphs = htmlContent.split('</p>');
+  const result = [];
+
+  paragraphs.forEach((p, index) => {
+    // Add the paragraph back (with closing tag if it wasn't the last empty split)
+    if (p.trim()) {
+      result.push(<div key={`p-${index}`} dangerouslySetInnerHTML={{ __html: p + '</p>' }} />);
+    }
+
+    // Inject ad after every 3rd paragraph
+    if ((index + 1) % 3 === 0 && index !== paragraphs.length - 1) {
+      result.push(
+        <div key={`ad-${index}`} className="my-4">
+          <InContentCustomAd />
+        </div>
+      );
+    }
+  });
+
+  return result;
 }
 
 const PostPage = () => {
@@ -43,7 +61,18 @@ const PostPage = () => {
     if (!newsID) return
     fetch(`/api/views/${newsID}`, { method: "POST" })
       .then((res) => res.json())
-      .then((data) => typeof data.views === "number" && setPostViews(data.views))
+      .then((data) => {
+        if (typeof data.views === "number") {
+          // Deterministic random offset based on newsID
+          let seed = 0;
+          const str = newsID.toString();
+          for (let i = 0; i < str.length; i++) seed += str.charCodeAt(i);
+          const random = Math.abs(Math.sin(seed) * 10000) % 1;
+          const offset = Math.floor(random * 601) + 400; // 400 to 1000
+
+          setPostViews(data.views + offset)
+        }
+      })
       .catch(console.error)
   }, [newsID])
 
@@ -111,10 +140,12 @@ const PostPage = () => {
               </div>
             </div>
 
-            <PostTitle title={title?.rendered || (typeof title === "string" ? title : "")} details={yoast_head_json || { twitter_misc: {"Est. reading time": ["0 min"]}}} categories={categories} />
+            <PostTitle title={title?.rendered || (typeof title === "string" ? title : "")} details={yoast_head_json || { twitter_misc: { "Est. reading time": ["0 min"] } }} categories={categories} />
             <PostViews views={postViews} />
 
-            <div dangerouslySetInnerHTML={{ __html: information }} className="news-holder pe-md-3" />
+            <div className="news-holder pe-md-3">
+              {insertAds(information)}
+            </div>
 
             <PostReactions postId={id} initialLikes={Math.floor(Math.random() * 50) + 5} />
             <SimpleSharers title={yoast_head_json?.title || (typeof title === "string" ? title : "")} image={Image} description={yoast_head_json?.og_description || ""} />
@@ -123,10 +154,10 @@ const PostPage = () => {
             <CommentDetails post_id={id} />
 
             {tags?.length > 0 && (
-              <div className="mb-3">
+              <div className="mb-3 d-flex flex-wrap align-items-center gap-2">
                 <span className="badge rounded-pill bg-dark">Tags</span>
                 {tags.map((tag, i) => (
-                  <small key={i} className="badge rounded-pill bg-light ms-2 text-muted">
+                  <small key={i} className="badge rounded-pill bg-light text-muted border">
                     {Tags[tag]}
                   </small>
                 ))}

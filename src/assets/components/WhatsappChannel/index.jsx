@@ -3,14 +3,17 @@
 * Filename: index.jsx
 */
 
+import { FaWhatsapp } from "react-icons/fa6";
 import "./index.css";
 
 const WhatsappChannel = () => {
     return (
         <div className="container text-center mt-4">
-            <a href="https://whatsapp.com/channel/0029VaGnbXuCsU9Si7zguy0S" className="btn btn-whatsapp btn-lg">
-                Follow the Pacesetter Frontier Magazine Channel on WhatsApp for News Updates.  Click to Join.
+            <a href="https://whatsapp.com/channel/0029VaGnbXuCsU9Si7zguy0S" className="btn btn-whatsapp-enhanced btn-lg d-inline-flex align-items-center gap-2" target="_blank" rel="noopener noreferrer">
+                <FaWhatsapp className="whatsapp-icon" size={24} />
+                <span>Follow Pacesetter Frontier on WhatsApp</span>
             </a>
+            <div className="mt-2 text-muted small">Click to Join for News Updates</div>
         </div>
     );
 };

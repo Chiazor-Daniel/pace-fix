@@ -34,72 +34,80 @@ const NavBar = () => {
   return (
     <div className="p-3 border-bottom border-1 sticky-top bg-white shadow-sm">
       <div className="container">
-        <div className="d-flex justify-content-between align-items-center">
+        {/* Top Row: Logo & Actions */}
+        <div className="d-flex justify-content-between align-items-center mb-2">
           <Link href={"/"} className="navbar-brand">
             <Image
               src="/top-logo.png"
               alt="Pacesetter Frontier Magazine"
-              height={80}
-              width={260}
+              height={60}
+              width={200}
               priority
               className="img-fluid"
             />
           </Link>
 
-          <div className="d-flex align-items-center fs-4">
-            <div className="nav-body me-3 hide-on-sm">
-              {navMenu.map((item, index) => (
-                <div key={index} className={`text-uppercase fs-13 mx-2 hover-red ${item.links && "my-dropdowns"}`}>
-                  <Link
-                    href={item.links ? "#" : `/${item.link}`}
-                    className="fw-bold-5 text-dark text-decoration-none d-flex align-items-center"
-                  >
-                    {item.name} {item.links && <PiDotsThreeOutlineVerticalDuotone className="ms-1" />}
-                  </Link>
-                  {item.links && (
-                    <ul className="my-dropdown-container">
-                      {item.links.map((address, subIndex) => (
-                        <li key={subIndex}>
-                          <Link
-                            href={
-                              address.link
-                                ? address.link
-                                : item.name.toLowerCase() === "columns"
-                                  ? `/category/${address.name.toLowerCase().replace(/\s+/g, '-')}`
-                                  : `/${address.name.toLowerCase().replace(/\s+/g, '-')}`
-                            }
-                            className="text-capitalize my-dropdown-item"
-                            target={address.link ? `_blank` : undefined}
-                            rel={address.link ? "noreferrer" : undefined}
-                          >
-                            {address.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
-            </div>
-
+          <div className="d-flex align-items-center gap-3">
+            {/* Search Trigger */}
             <button
-              className="btn btn-link p-0 me-2 text-dark"
+              className="btn btn-link p-0 text-dark"
               data-bs-toggle="modal"
               data-bs-target="#searchModal"
               title="Search"
             >
-              <TfiSearch className="hover-red" />
+              <TfiSearch size={20} className="hover-red transition-all" />
             </button>
 
-
-
+            {/* Mobile Menu Trigger */}
             <button
               className="btn btn-link p-0 text-dark hide-on-lg"
               onClick={() => setDisplayNav(!displayNav)}
               title="Menu"
             >
-              <SlMenu className="hover-red fw-bold" />
+              <SlMenu size={24} className="hover-red fw-bold transition-all" />
             </button>
+          </div>
+        </div>
+
+        {/* Bottom Row: Navigation (Desktop) */}
+        <div className="nav-bottom-row hide-on-sm border-top border-light pt-2 pb-1">
+          <div className="d-flex justify-content-center align-items-center flex-wrap gap-3">
+            {navMenu.map((item, index) => (
+              <div key={index} className={`position-relative group ${item.links && "my-dropdowns"}`}>
+                <Link
+                  href={item.links ? "#" : `/${item.link}`}
+                  className="nav-link-custom text-uppercase fs-12 fw-bold text-secondary text-decoration-none d-flex align-items-center py-1"
+                >
+                  {item.name} {item.links && <PiDotsThreeOutlineVerticalDuotone className="ms-1" />}
+                </Link>
+
+                {/* Custom Underline Effect */}
+                <div className="nav-underline"></div>
+
+                {item.links && (
+                  <ul className="my-dropdown-container shadow-sm border-top border-danger border-2" style={{ zIndex: 1000, minWidth: '200px', backgroundColor: '#fff', padding: '10px 0' }}>
+                    {item.links.map((address, subIndex) => (
+                      <li key={subIndex}>
+                        <Link
+                          href={
+                            address.link
+                              ? address.link
+                              : item.name.toLowerCase() === "columns"
+                                ? `/category/${address.name.toLowerCase().replace(/\s+/g, '-')}`
+                                : `/${address.name.toLowerCase().replace(/\s+/g, '-')}`
+                          }
+                          className="d-block px-3 py-2 text-decoration-none text-dark fs-13 hover-bg-light transition-all"
+                          target={address.link ? `_blank` : undefined}
+                          rel={address.link ? "noreferrer" : undefined}
+                        >
+                          {address.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -107,7 +115,7 @@ const NavBar = () => {
       {/*Enhanced Search Modal*/}
       <div className="modal fade" id="searchModal" tabIndex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
+          <div className="modal-content border-0 shadow-lg">
             <div className="modal-header border-0">
               <h5 className="modal-title fw-bold" id="searchModalLabel">
                 Search Articles
