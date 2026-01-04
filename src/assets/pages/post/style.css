@@ -31,20 +31,38 @@
     width: 100% !important;
 }
 
-/* Responsive video embeds */
+/* Responsive iframe container - forces 16:9 aspect ratio */
+.responsive-iframe-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    margin: 3rem auto !important;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.responsive-iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
+    border-radius: 12px;
+}
+
+/* Fallback for iframes not in containers */
 .news-holder iframe,
 .news-holder video,
 .news-holder embed,
 .news-holder object {
     max-width: 100% !important;
     width: 100% !important;
-    aspect-ratio: 16 / 9;
-    height: auto !important;
     display: block;
-    margin: 3rem auto !important;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Specific overrides for containers to ensure they don't break the framing */
@@ -67,6 +85,27 @@
 
     .sharers {
         flex-direction: row;
+    }
+
+    /* Mobile overlay for social share icons */
+    .sharers-mobile-overlay {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 100;
+        background: transparent;
+        padding: 8px;
+    }
+
+    .sharers-mobile-overlay .sharers {
+        flex-direction: column !important;
+        gap: 12px;
+        margin: 0;
+    }
+
+    .post-image-wrapper {
+        margin-bottom: 2rem;
     }
 
     /* Ensure videos don't overflow on mobile */

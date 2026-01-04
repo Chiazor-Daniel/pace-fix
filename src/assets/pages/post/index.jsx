@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from "react"
 import Head from "next/head"
 import Skeleton from "react-loading-skeleton"
 import "react-loading-skeleton/dist/skeleton.css"
+import "./style.css"
 
 import { Layout } from ".."
 import SideBar from "./SideBar"
@@ -24,7 +25,17 @@ import GoogleAd from "@/app/googleAd/ad"
 const insertAds = (htmlContent) => {
   if (!htmlContent) return [];
 
-  const paragraphs = htmlContent.split('</p>');
+  // First, wrap all iframes in responsive containers
+  let processedContent = htmlContent.replace(
+    /<iframe([^>]*)>/gi,
+    '<div class="responsive-iframe-container"><iframe$1>'
+  );
+  processedContent = processedContent.replace(
+    /<\/iframe>/gi,
+    '</iframe></div>'
+  );
+
+  const paragraphs = processedContent.split('</p>');
   const result = [];
 
   paragraphs.forEach((p, index) => {
@@ -125,20 +136,29 @@ const PostPage = () => {
             {/* <Adverts index={0} /> */}
 
             <div className="row">
-              <div className="col-md-1 sharers">
-                <Sharers title={yoast_head_json?.title || (typeof title === "string" ? title : "")} image={Image} description={yoast_head_json?.og_description || ""} />
-              </div>
               <div className="col-md-11 post-head">
-                <div className="post-image-holder text-center">
-                  <img
-                    src={Image}
-                    alt="Post"
-                    className="shadow rounded img-fluid"
-                    onError={() => setImgLoaded(false)}
-                  />
+                <div className="post-image-wrapper position-relative">
+                  <div className="post-image-holder text-center">
+                    <img
+                      src={Image}
+                      alt="Post"
+                      className="shadow rounded img-fluid"
+                      onError={() => setImgLoaded(false)}
+                    />
+                  </div>
 
+                  {/* Social sharers - absolute positioned on mobile */}
+                  <div className="sharers-mobile-overlay d-md-none">
+                    <Sharers title={yoast_head_json?.title || (typeof title === "string" ? title : "")} image={Image} description={yoast_head_json?.og_description || ""} />
+                  </div>
+
+                  {imgCaption && <p className="fw-bold mx-auto mt-2 text-muted"><small>{imgCaption}</small></p>}
                 </div>
-                {imgCaption && <p className="fw-bold mx-auto mt-2 text-muted"><small>{imgCaption}</small></p>}
+              </div>
+
+              {/* Desktop sharers - left column */}
+              <div className="col-md-1 sharers d-none d-md-flex">
+                <Sharers title={yoast_head_json?.title || (typeof title === "string" ? title : "")} image={Image} description={yoast_head_json?.og_description || ""} />
               </div>
             </div>
 
