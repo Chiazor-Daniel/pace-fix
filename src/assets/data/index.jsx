@@ -96,62 +96,54 @@ export const navMenu = [
     link: "",
   },
   {
-    name: "News",
-    link: "category/news",
-  },
-  {
-    name: "Politics",
-    link: "category/politics",
-  },
-  {
-    name: "Business & Economy",
-    link: "category/business-economy",
-  },
-  {
-    name: "Tech",
-    link: "category/tech",
-  },
-  {
-    name: "Sports",
-    link: "category/sports",
-  },
-  {
-    name: "Entertainment",
-    link: "category/entertainment",
-  },
-  {
-    name: "Fashion",
-    link: "category/fashion",
-  },
-  {
-    name: "Lifestyle",
-    link: "category/lifestyle",
-  },
-  {
-    name: "Health",
-    link: "category/health",
-  },
-  {
-    name: "Opinion",
-    link: "category/opinion",
-  },
-  {
-    name: "About",
+    name: "About Us/Contact Us",
     link: "about-us",
   },
   {
-    name: "Magazines",
+    name: "World News",
+    link: "category/World News",
+  },
+  {
+    name: "African News",
+    link: "category/African News",
+  },
+  {
+    name: "Technology",
+    link: "category/Tech",
+  },
+  {
+    name: "Sports",
+    link: "category/Sports",
+  },
+  {
+    name: "Health",
+    link: "category/Health",
+  },
+  {
+    name: "Lifestyle",
+    link: "category/Lifestyle",
+  },
+  {
+    name: "Education",
+    link: "category/Education",
+  },
+  {
+    name: "Frontier Discourse",
+    link: "frontier-discourse",
+  },
+  {
+    name: "E-Magazine",
     links: [
       {
-        name: "Democracy Edition",
+        name: "Democracy Edition - ₦1000",
+        link: "https://paystack.com/buy/democracy-may-magazine-fbxscj",
+      },
+      {
+        name: "Xmas/New Year Edition - ₦1000",
         link: "https://paystack.com/pay/the-pacesetter-frontier-may-2023-magazine",
       },
       {
-        name: "Xmas/New Year Edition",
-        link: "https://paystack.com/pay/the-pacesetter-frontier-may-2023-magazine",
-      },
-      {
-        name: "Independence Edition",
+        name: "Independence Edition - ₦1000",
         link: "https://paystack.com/buy/independence-oct-magazine-2023-wisqga",
       },
     ],

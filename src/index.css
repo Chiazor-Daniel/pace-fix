@@ -327,3 +327,23 @@ code {
 .reaction-small-icon:nth-child(3) {
   z-index: 1;
 }
+
+/* Visible reaction buttons */
+.reaction-btn-visible {
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.reaction-btn-visible:not(:disabled):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.reaction-btn-visible:disabled {
+  cursor: not-allowed;
+}
+
+.reaction-btn-visible.active {
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}

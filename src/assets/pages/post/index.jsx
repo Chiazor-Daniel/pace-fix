@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import Head from "next/head"
 import Skeleton from "react-loading-skeleton"
 import "react-loading-skeleton/dist/skeleton.css"
@@ -10,7 +10,8 @@ import SideBar from "./SideBar"
 import { SidebarAd, EndOfArticleAd, StickyMobileFooterAd } from "../../components/AdsPlacements"
 import {
   Adverts, Disclaimer, PostTitle, Sharers, SimpleSharers,
-  BottomRecent, ArticleTitle, CommentDetails, WhatsappChannel
+  BottomRecent, ArticleTitle, CommentDetails, WhatsappChannel,
+  AdsSliderStrip
 } from "../../components"
 import { PostViews, PostReactions } from "../../components/metaInfo"
 import { usePostContext } from "../../context"
@@ -24,7 +25,6 @@ import GoogleAd from "@/app/googleAd/ad"
 const insertAds = (htmlContent) => {
   if (!htmlContent) return [];
 
-  // Split by closing paragraph tag, or line breaks if no p tags
   const paragraphs = htmlContent.split('</p>');
   const result = [];
 
@@ -33,9 +33,9 @@ const insertAds = (htmlContent) => {
       result.push(<div key={`p-${index}`} dangerouslySetInnerHTML={{ __html: p + '</p>' }} />);
     }
 
-    // Inject ad after every 2nd paragraph for better visibility
-    if ((index + 1) % 2 === 0 && index !== paragraphs.length - 1) {
-      const isEven = (index + 1) % 4 === 0;
+    // Inject ad after every 4th paragraph to avoid overwhelming content
+    if ((index + 1) % 4 === 0 && index !== paragraphs.length - 1 && index > 0) {
+      const isEven = (index + 1) % 8 === 0;
       result.push(
         <div key={`ad-${index}`} className="my-4 text-center border-top border-bottom py-3 bg-light">
           <small className="text-muted d-block mb-2">Advertisement</small>
@@ -49,8 +49,8 @@ const insertAds = (htmlContent) => {
     }
   });
 
-  // If very short content, add at least one ad at the end
-  if (paragraphs.length < 3 && paragraphs.length > 0) {
+  // Only add final ad if content is very long (more than 8 paragraphs)
+  if (paragraphs.length > 8) {
     result.push(
       <div key="ad-final" className="my-4 text-center">
         <GoogleAd dataAdSlot="7380011854" />
@@ -77,12 +77,12 @@ const PostPage = () => {
       .then((res) => res.json())
       .then((data) => {
         if (typeof data.views === "number") {
-          // Deterministic random offset based on newsID
+          // Deterministic random offset based on newsID (1000-2000 range)
           let seed = 0;
           const str = newsID.toString();
           for (let i = 0; i < str.length; i++) seed += str.charCodeAt(i);
           const random = Math.abs(Math.sin(seed) * 10000) % 1;
-          const offset = Math.floor(random * 601) + 400; // 400 to 1000
+          const offset = Math.floor(random * 1001) + 1000; // 1000 to 2000
 
           setPostViews(data.views + offset)
         }
@@ -129,12 +129,12 @@ const PostPage = () => {
       />
 
       <div className="container my-5">
-        <div className="d-flex justify-content-between align-items-center mb-4 gap-3 flex-wrap" suppressHydrationWarning>
-          <GoogleAd dataAdSlot="9096348399" />
+        <div className="container mt-4">
+          <AdsSliderStrip />
         </div>
         <div className="row">
           <div className="col-md-9">
-            <Adverts index={0} />
+            {/* <Adverts index={0} /> */}
 
             <div className="row">
               <div className="col-md-1 sharers">
@@ -172,7 +172,7 @@ const PostPage = () => {
                 <span className="badge rounded-pill bg-dark">Tags</span>
                 {tags.map((tag, i) => (
                   <small key={i} className="badge rounded-pill bg-light text-muted border">
-                    {Tags[tag] || tag}
+                    {Tags[tag]}
                   </small>
                 ))}
               </div>

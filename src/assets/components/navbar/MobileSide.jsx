@@ -20,8 +20,16 @@ const MobileSide = ({ menus, display }) => {
                 {item.links.map((address, subIndex) => (
                   <li key={subIndex}>
                     <Link
-                      href={item.name.toLowerCase() === "columns" ? `/category/${address.name}` : `/${address.name}`}
+                      href={
+                        address.link
+                          ? address.link
+                          : item.name.toLowerCase() === "columns"
+                            ? `/category/${address.name.toLowerCase().replace(/\s+/g, '-')}`
+                            : `/${address.name.toLowerCase().replace(/\s+/g, '-')}`
+                      }
                       className="text-capitalize my-dropdown-item"
+                      target={address.link ? "_blank" : undefined}
+                      rel={address.link ? "noreferrer" : undefined}
                     >
                       {address.name}
                     </Link>

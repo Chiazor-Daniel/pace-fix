@@ -56,14 +56,13 @@ export const PostViews = ({ views = 0 }) => (
 export const PostReactions = ({ postId, initialLikes = 0 }) => {
   const [likes, setLikes] = React.useState(initialLikes)
   const [userReaction, setUserReaction] = React.useState(null)
-  const [showReactions, setShowReactions] = React.useState(false)
 
   const reactions = [
     { label: "Like", emoji: "👍", color: "#007bff" },
     { label: "Love", emoji: "❤️", color: "#e83e8c" },
     { label: "Haha", emoji: "😂", color: "#ffc107" },
-    { label: "Wow", emoji: "😮", color: "#ffc107" },
-    { label: "Sad", emoji: "😢", color: "#ffc107" },
+    { label: "Wow", emoji: "😮", color: "#17a2b8" },
+    { label: "Sad", emoji: "😢", color: "#6c757d" },
     { label: "Angry", emoji: "😡", color: "#dc3545" },
   ]
 
@@ -93,64 +92,54 @@ export const PostReactions = ({ postId, initialLikes = 0 }) => {
         if (typeof window !== 'undefined') {
           localStorage.setItem(`reaction_post_${postId}`, reaction);
         }
-        setShowReactions(false);
       })
       .catch(err => console.error('Failed to increment post like:', err));
   };
 
-  const selectedReaction = reactions.find(r => r.emoji === userReaction) || reactions[0];
+  const selectedReaction = reactions.find(r => r.emoji === userReaction);
 
   return (
-    <div className="reaction-wrapper my-4">
-      <div className="d-flex align-items-center gap-3">
-        <div
-          className="position-relative"
-          onMouseEnter={() => !userReaction && setShowReactions(true)}
-          onMouseLeave={() => setShowReactions(false)}
-        >
-          {/* Reaction Bar (Pill) */}
-          {showReactions && (
-            <div className="reaction-bar shadow-lg bg-white rounded-pill px-2 py-1 d-flex gap-2">
-              {reactions.map((r) => (
-                <button
-                  key={r.label}
-                  className="reaction-btn btn p-1 border-0 rounded-circle transition-all hover-scale"
-                  onClick={() => handleReaction(r.emoji)}
-                  title={r.label}
-                  style={{ fontSize: '1.8rem' }}
-                >
-                  {r.emoji}
-                </button>
-              ))}
-            </div>
-          )}
-
-          {/* Main Toggle Button */}
-          <button
-            className={`btn rounded-pill d-flex align-items-center gap-2 px-3 py-2 border-0 shadow-sm transition-all ${userReaction ? 'bg-white' : 'btn-outline-secondary'}`}
-            onClick={() => !userReaction && handleReaction("👍")}
-            style={{
-              color: userReaction ? selectedReaction.color : 'inherit',
-              fontWeight: userReaction ? '700' : '500'
-            }}
-          >
-            <span style={{ fontSize: '1.5rem' }}>{userReaction || "👍"}</span>
-            <span>{userReaction ? selectedReaction.label : "Like"}</span>
-          </button>
-        </div>
-
-        <div className="reaction-stats d-flex align-items-center gap-2">
-          <div className="d-flex -space-x-2">
-            <span className="reaction-small-icon">👍</span>
-            <span className="reaction-small-icon">❤️</span>
-          </div>
-          <span className="fw-bold text-muted" style={{ fontSize: '0.9rem' }}>
-            {likes.toLocaleString()}
-          </span>
-        </div>
+    <div className="reaction-wrapper my-4 p-3 bg-light rounded">
+      <div className="mb-2">
+        <small className="text-muted fw-bold">How do you feel about this article?</small>
       </div>
 
+      {/* Show all reactions upfront */}
+      <div className="d-flex align-items-center gap-2 flex-wrap mb-3">
+        {reactions.map((r) => (
+          <button
+            key={r.label}
+            className={`reaction-btn-visible btn px-3 py-2 border rounded-pill d-flex align-items-center gap-2 transition-all ${userReaction === r.emoji ? 'active' : ''
+              }`}
+            onClick={() => handleReaction(r.emoji)}
+            disabled={!!userReaction}
+            title={r.label}
+            style={{
+              fontSize: '1.2rem',
+              backgroundColor: userReaction === r.emoji ? r.color : 'white',
+              color: userReaction === r.emoji ? 'white' : '#333',
+              borderColor: userReaction === r.emoji ? r.color : '#ddd',
+              opacity: userReaction && userReaction !== r.emoji ? 0.5 : 1,
+              cursor: userReaction ? 'not-allowed' : 'pointer'
+            }}
+          >
+            <span style={{ fontSize: '1.5rem' }}>{r.emoji}</span>
+            <span className="small fw-bold">{r.label}</span>
+          </button>
+        ))}
+      </div>
 
+      {/* Reaction count */}
+      <div className="d-flex align-items-center gap-2 pt-2 border-top">
+        <div className="d-flex align-items-center">
+          <span className="reaction-small-icon">👍</span>
+          <span className="reaction-small-icon">❤️</span>
+          <span className="reaction-small-icon">😂</span>
+        </div>
+        <span className="fw-bold text-muted" style={{ fontSize: '0.9rem' }}>
+          {likes.toLocaleString()} {likes === 1 ? 'reaction' : 'reactions'}
+        </span>
+      </div>
     </div>
   );
 }
