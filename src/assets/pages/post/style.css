@@ -87,21 +87,17 @@
         flex-direction: row;
     }
 
-    /* Mobile overlay for social share icons */
-    .sharers-mobile-overlay {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 100;
-        background: transparent;
-        padding: 8px;
-    }
-
-    .sharers-mobile-overlay .sharers {
-        flex-direction: column !important;
+    /* Mobile social share icons - below image */
+    .sharers-mobile-below .sharers {
+        flex-direction: row !important;
         gap: 12px;
         margin: 0;
+        justify-content: center;
+    }
+
+    /* Force horizontal layout - override flex-column */
+    .sharers-mobile-below>div {
+        flex-direction: row !important;
     }
 
     .post-image-wrapper {

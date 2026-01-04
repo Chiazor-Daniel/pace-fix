@@ -147,12 +147,12 @@ const PostPage = () => {
                     />
                   </div>
 
-                  {/* Social sharers - absolute positioned on mobile */}
-                  <div className="sharers-mobile-overlay d-md-none">
-                    <Sharers title={yoast_head_json?.title || (typeof title === "string" ? title : "")} image={Image} description={yoast_head_json?.og_description || ""} />
-                  </div>
-
                   {imgCaption && <p className="fw-bold mx-auto mt-2 text-muted"><small>{imgCaption}</small></p>}
+                </div>
+
+                {/* Social sharers - below image on mobile */}
+                <div className="sharers-mobile-below d-md-none mt-3">
+                  <Sharers title={yoast_head_json?.title || (typeof title === "string" ? title : "")} image={Image} description={yoast_head_json?.og_description || ""} />
                 </div>
               </div>
 

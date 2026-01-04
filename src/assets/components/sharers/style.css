@@ -13,9 +13,9 @@
     box-shadow: 2px 1px 2px #00000050;
 }
 
-/* Mobile overlay specific styling */
+/* Mobile specific styling for share icons below image */
 @media screen and (max-width: 700px) {
-    .sharers-mobile-overlay .sharer-icon {
+    .sharers-mobile-below .sharer-icon {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(8px);
         border-radius: 50%;
@@ -26,7 +26,7 @@
         padding: 0;
     }
 
-    .sharers-mobile-overlay .sharer-icon:hover {
+    .sharers-mobile-below .sharer-icon:hover {
         background: rgba(255, 255, 255, 1);
         transform: scale(1.1);
     }

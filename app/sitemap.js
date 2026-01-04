@@ -2,7 +2,7 @@ import { getDb } from '../utils/mongodb.js';
 
 export default async function sitemap() {
   const baseUrl = 'https://pacesetterfrontier.com';
-  
+
   // Static pages
   const staticPages = [
     {
@@ -39,7 +39,7 @@ export default async function sitemap() {
 
   try {
     const db = await getDb();
-    
+
     // Fetch posts from MongoDB
     const postsCollection = db.collection('posts');
     const posts = await postsCollection
@@ -47,7 +47,7 @@ export default async function sitemap() {
       .sort({ updatedAt: -1 })
       .limit(10000)
       .toArray();
-    
+
     const postPages = posts.map(post => ({
       url: `${baseUrl}/post/${post.id}/${post.slug}`,
       lastModified: new Date(post.updatedAt || post.createdAt),
@@ -61,7 +61,7 @@ export default async function sitemap() {
       .find({})
       .sort({ name: 1 })
       .toArray();
-    
+
     const categoryPages = categories.map(category => ({
       url: `${baseUrl}/category/${category.slug}`,
       lastModified: new Date(),
@@ -73,7 +73,7 @@ export default async function sitemap() {
     const searchLogsCollection = db.collection('search_logs');
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-    
+
     let searchPages = [];
     try {
       const searchAggregation = await searchLogsCollection.aggregate([
@@ -101,7 +101,7 @@ export default async function sitemap() {
           $limit: 100
         }
       ]).toArray();
-      
+
       searchPages = searchAggregation.map(term => ({
         url: `${baseUrl}/search/${encodeURIComponent(term._id.replace(/\s+/g, '-'))}`,
         lastModified: new Date(term.lastSearch),
@@ -115,7 +115,7 @@ export default async function sitemap() {
     // Generate date-based archive pages
     const twoYearsAgo = new Date();
     twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
-    
+
     let dateArchives = [];
     try {
       const dateAggregation = await postsCollection.aggregate([
@@ -144,12 +144,12 @@ export default async function sitemap() {
           $sort: { '_id.year': -1, '_id.month': -1 }
         }
       ]).toArray();
-      
+
       dateArchives = dateAggregation.map(archive => {
         const year = archive._id.year;
         const month = String(archive._id.month).padStart(2, '0');
         const day = '01'; // First day of the month
-        
+
         return {
           url: `${baseUrl}/${year}/${month}/${day}`,
           lastModified: new Date(archive.archiveDate),
