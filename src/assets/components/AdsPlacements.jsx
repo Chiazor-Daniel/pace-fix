@@ -30,34 +30,35 @@ function AdsenseAd({ dataAdSlot, style, className = "", adFormat = "auto", fullW
 // Sidebar (desktop)
 export const SidebarAd = () => (
   <div className="my-4" data-ad-location="sidebar">
-    <AdsenseAd dataAdSlot="YOUR_SIDEBAR_SLOT_ID" />
+    <AdsenseAd dataAdSlot="9096348399" />
   </div>
 );
 
 // Below article title / above content
 export const BelowTitleAd = () => (
   <div className="my-4" data-ad-location="below-title">
-    <AdsenseAd dataAdSlot="YOUR_BELOW_TITLE_SLOT_ID" />
+    <AdsenseAd dataAdSlot="7380011854" />
   </div>
 );
 
 // In-content (between paragraphs)
 export const InContentAd = () => (
   <div className="my-4" data-ad-location="in-content">
-    <AdsenseAd dataAdSlot="YOUR_IN_CONTENT_SLOT_ID" />
+    <AdsenseAd dataAdSlot="7380011854" />
   </div>
 );
 
 // End of article
 export const EndOfArticleAd = () => (
   <div className="my-4" data-ad-location="end-of-article">
-    <AdsenseAd dataAdSlot="YOUR_END_OF_ARTICLE_SLOT_ID" />
+    <AdsenseAd dataAdSlot="7380011854" />
   </div>
 );
 
 // Sticky mobile footer
 export const StickyMobileFooterAd = () => (
-  <div className="sticky-bottom d-md-none" data-ad-location="sticky-mobile-footer">
-    <AdsenseAd dataAdSlot="YOUR_MOBILE_FOOTER_SLOT_ID" />
+  <div className="fixed-bottom d-md-none shadow-lg text-center bg-white" style={{ zIndex: 1000, minHeight: '50px', borderTop: '1px solid #ddd' }} data-ad-location="sticky-mobile-footer">
+    <div style={{ fontSize: '10px', color: '#999', padding: '2px' }}>Advertisement</div>
+    <AdsenseAd dataAdSlot="9096348399" />
   </div>
 );

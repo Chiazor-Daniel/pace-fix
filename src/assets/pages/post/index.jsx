@@ -24,25 +24,39 @@ import GoogleAd from "@/app/googleAd/ad"
 const insertAds = (htmlContent) => {
   if (!htmlContent) return [];
 
-  // Split by closing paragraph tag
+  // Split by closing paragraph tag, or line breaks if no p tags
   const paragraphs = htmlContent.split('</p>');
   const result = [];
 
   paragraphs.forEach((p, index) => {
-    // Add the paragraph back (with closing tag if it wasn't the last empty split)
     if (p.trim()) {
       result.push(<div key={`p-${index}`} dangerouslySetInnerHTML={{ __html: p + '</p>' }} />);
     }
 
-    // Inject ad after every 3rd paragraph
-    if ((index + 1) % 3 === 0 && index !== paragraphs.length - 1) {
+    // Inject ad after every 2nd paragraph for better visibility
+    if ((index + 1) % 2 === 0 && index !== paragraphs.length - 1) {
+      const isEven = (index + 1) % 4 === 0;
       result.push(
-        <div key={`ad-${index}`} className="my-4">
-          <InContentCustomAd />
+        <div key={`ad-${index}`} className="my-4 text-center border-top border-bottom py-3 bg-light">
+          <small className="text-muted d-block mb-2">Advertisement</small>
+          {isEven ? (
+            <GoogleAd dataAdSlot="7380011854" />
+          ) : (
+            <InContentCustomAd />
+          )}
         </div>
       );
     }
   });
+
+  // If very short content, add at least one ad at the end
+  if (paragraphs.length < 3 && paragraphs.length > 0) {
+    result.push(
+      <div key="ad-final" className="my-4 text-center">
+        <GoogleAd dataAdSlot="7380011854" />
+      </div>
+    );
+  }
 
   return result;
 }
@@ -158,7 +172,7 @@ const PostPage = () => {
                 <span className="badge rounded-pill bg-dark">Tags</span>
                 {tags.map((tag, i) => (
                   <small key={i} className="badge rounded-pill bg-light text-muted border">
-                    {Tags[tag]}
+                    {Tags[tag] || tag}
                   </small>
                 ))}
               </div>

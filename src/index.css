@@ -168,7 +168,7 @@ code {
 /* GENERAL FOOTER SETTINGS */
 .footer {
   background-color: var(--main-dark);
-  min-height: 90vh;
+  min-height: 40vh;
 }
 
 .credit {
@@ -179,12 +179,14 @@ code {
 #scroll-top {
   position: fixed;
   right: 20px;
-  bottom: 50px;
+  bottom: 80px;
+  /* Slightly higher for mobile sticky ads */
+  z-index: 9999;
 }
 
 #scroll-top:hover {
-  background-color: silver;
-  color: darkred;
+  background-color: var(--main-red);
+  color: white;
   transition: var(--t-slow);
 }
 
