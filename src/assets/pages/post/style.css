@@ -45,7 +45,6 @@
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.1);
-    overflow: hidden;
 }
 
 /* Specific overrides for containers to ensure they don't break the framing */
@@ -54,6 +53,7 @@
     width: 100% !important;
     margin: 3.5rem 0 !important;
     padding: 0 !important;
+    overflow: visible !important;
 }
 
 @media screen and (max-width: 700px) {
