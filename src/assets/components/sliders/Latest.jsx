@@ -92,7 +92,7 @@ export const BottomRecent = ({ categories }) => {
   const category = getCategory(categories)
   const width = HandleWidth()
   // fetch post if it doesn't already exist
-  const url = `${process.env.REACT_APP_API_URL}posts?categories=${category.id}&per_page=16`
+  const url = `${process.env.NEXT_PUBLIC_API_URL}posts?categories=${category.id}&per_page=16`
   const { loading, data } = UseFetch(url, `posts_${category.name}`)
   if (loading)
     return (
@@ -100,25 +100,30 @@ export const BottomRecent = ({ categories }) => {
         <Preloader />
       </div>
     )
-  else {
-    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToScroll: 1,
-      lazyLoad: true,
-      slidesToShow: width < 800 ? 1 : 2,
-    }
-    return (
-      <div className="row">
-        <Slider {...settings}>
-          {data.slice(0, 4).map((item) => (
-            <VerticalSegment showDesc={false} key={item.id} {...item} catName={category.name} item={item} />
-          ))}
-        </Slider>
-      </div>
-    )
+
+  if (!data || data.length === 0) return null;
+
+  const settings = {
+    dots: true,
+    infinite: data.length > (width < 800 ? 1 : 2),
+    speed: 500,
+    slidesToScroll: 1,
+    lazyLoad: true,
+    slidesToShow: width < 800 ? 1 : 2,
+    arrows: width > 800
   }
+
+  return (
+    <div className="row related-posts-row">
+      <Slider {...settings}>
+        {data.slice(0, 10).map((item) => (
+          <div key={item.id} className="px-2">
+            <VerticalSegment showDesc={false} {...item} catName={category.name} item={item} />
+          </div>
+        ))}
+      </Slider>
+    </div>
+  )
 }
 
 export default Latest

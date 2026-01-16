@@ -91,10 +91,10 @@ export default function RootLayout({ children }) {
             }(document,"script","https://chimpstatic.com/mcjs-connected/js/users/41cf0c45a5141cbfb27bfc3fd/bfb1cf43be183f753e97814fb.js");`}
         </Script>
 
-        {/* Google Adsense Script */}
+        {/* Google Adsense Script - Loaded without client param to disable Auto Ads/Overlays */}
         <Script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3536158399576400"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />

@@ -13,9 +13,10 @@ import { Categories } from "../../../data";
 
 const CommonHome = ({ name, start, skip = 4, columns = 6, extras = "" }) => {
   const categoryId = getKeyByValue(Categories, name) ?? 6;
+
   const url = extras.trim()
     ? `${process.env.NEXT_PUBLIC_API_URL}posts?search=${extras}&per_page=16`
-    : `${process.env.NEXT_PUBLIC_API_URL}posts?categories=${categoryId}&per_page=40`;
+    : `${process.env.NEXT_PUBLIC_API_URL}posts?categories=${categoryId}&per_page=12`;
 
   const [begin, setBegin] = useState(start);
   const { loading, data } = UseFetch(url, `posts_${name}`); // 👈 fetch immediately

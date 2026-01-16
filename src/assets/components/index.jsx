@@ -10,8 +10,10 @@ import { Sharers, SimpleSharers } from "./sharers";
 import Disclaimer from "./sharers/Disclaimer";
 import AdsComponent from "./adsComponent";
 import WhatsappChannel from "./WhatsappChannel";
+import AdsSliderStrip from "./AdsSliderStrip";
 
 export {
+  AdsSliderStrip,
   Adverts,
   Index as NavBar,
   TopHero,

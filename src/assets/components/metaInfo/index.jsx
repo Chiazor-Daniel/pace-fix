@@ -55,9 +55,17 @@ export const PostViews = ({ views = 0 }) => (
 
 export const PostReactions = ({ postId, initialLikes = 0 }) => {
   const [likes, setLikes] = React.useState(initialLikes)
-  const [hasLiked, setHasLiked] = React.useState(false)
+  const [userReaction, setUserReaction] = React.useState(null)
 
-  // Fetch real like count on mount
+  const reactions = [
+    { label: "Like", emoji: "👍", color: "#007bff" },
+    { label: "Love", emoji: "❤️", color: "#e83e8c" },
+    { label: "Haha", emoji: "😂", color: "#ffc107" },
+    { label: "Wow", emoji: "😮", color: "#17a2b8" },
+    { label: "Sad", emoji: "😢", color: "#6c757d" },
+    { label: "Angry", emoji: "😡", color: "#dc3545" },
+  ]
+
   React.useEffect(() => {
     if (!postId) return;
     fetch(`/api/likes/${postId}`)
@@ -65,46 +73,73 @@ export const PostReactions = ({ postId, initialLikes = 0 }) => {
       .then(data => {
         if (typeof data.likes === 'number') setLikes(data.likes);
       })
-      .catch(err => {
-        console.error('Failed to fetch post likes:', err);
-      });
-    // Check localStorage to prevent multiple likes per session
+      .catch(err => console.error('Failed to fetch post likes:', err));
+
     if (typeof window !== 'undefined') {
-      setHasLiked(!!localStorage.getItem(`liked_post_${postId}`));
+      const stored = localStorage.getItem(`reaction_post_${postId}`);
+      if (stored) setUserReaction(stored);
+      else if (localStorage.getItem(`liked_post_${postId}`)) setUserReaction("👍");
     }
   }, [postId]);
 
-  const handleLike = () => {
-    if (hasLiked) return;
+  const handleReaction = (reaction) => {
+    if (userReaction) return;
     fetch(`/api/likes/${postId}`, { method: 'POST' })
       .then(res => res.json())
       .then(data => {
         if (typeof data.likes === 'number') setLikes(data.likes);
-        setHasLiked(true);
+        setUserReaction(reaction);
         if (typeof window !== 'undefined') {
-          localStorage.setItem(`liked_post_${postId}`, '1');
+          localStorage.setItem(`reaction_post_${postId}`, reaction);
         }
       })
-      .catch(err => {
-        console.error('Failed to increment post like:', err);
-      });
+      .catch(err => console.error('Failed to increment post like:', err));
   };
 
+  const selectedReaction = reactions.find(r => r.emoji === userReaction);
+
   return (
-    <div className="d-flex align-items-center gap-3 my-3 p-3 bg-light rounded">
-      <button
-        className={`btn btn-sm d-flex align-items-center gap-2 ${hasLiked ? "btn-primary" : "btn-outline-primary"}`}
-        onClick={handleLike}
-        disabled={hasLiked}
-      >
-        <CgHeart size={18} />
-        <span>
-          {likes} {likes === 1 ? "Like" : "Likes"}
+    <div className="reaction-wrapper my-4 p-3 bg-light rounded">
+      <div className="mb-2">
+        <small className="text-muted fw-bold">How do you feel about this article?</small>
+      </div>
+
+      {/* Show all reactions upfront */}
+      <div className="d-flex align-items-center gap-2 flex-wrap mb-3">
+        {reactions.map((r) => (
+          <button
+            key={r.label}
+            className={`reaction-btn-visible btn px-3 py-2 border rounded-pill d-flex align-items-center gap-2 transition-all ${userReaction === r.emoji ? 'active' : ''
+              }`}
+            onClick={() => handleReaction(r.emoji)}
+            disabled={!!userReaction}
+            title={r.label}
+            style={{
+              fontSize: '1.2rem',
+              backgroundColor: userReaction === r.emoji ? r.color : 'white',
+              color: userReaction === r.emoji ? 'white' : '#333',
+              borderColor: userReaction === r.emoji ? r.color : '#ddd',
+              opacity: userReaction && userReaction !== r.emoji ? 0.5 : 1,
+              cursor: userReaction ? 'not-allowed' : 'pointer'
+            }}
+          >
+            <span style={{ fontSize: '1.5rem' }}>{r.emoji}</span>
+            <span className="small fw-bold">{r.label}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Reaction count */}
+      <div className="d-flex align-items-center gap-2 pt-2 border-top">
+        <div className="d-flex align-items-center">
+          <span className="reaction-small-icon">👍</span>
+          <span className="reaction-small-icon">❤️</span>
+          <span className="reaction-small-icon">😂</span>
+        </div>
+        <span className="fw-bold text-muted" style={{ fontSize: '0.9rem' }}>
+          {likes.toLocaleString()} {likes === 1 ? 'reaction' : 'reactions'}
         </span>
-      </button>
-      <small className="text-muted">
-        {hasLiked ? "Thanks for your reaction!" : "Show your support for this article"}
-      </small>
+      </div>
     </div>
   );
 }

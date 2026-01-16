@@ -7,13 +7,35 @@
     font-size: 1em;
     transition: var(--t-fast);
 }
+
 .sharer-icon:hover {
     color: red !important;
     box-shadow: 2px 1px 2px #00000050;
 }
+
+/* Mobile specific styling for share icons below image */
+@media screen and (max-width: 700px) {
+    .sharers-mobile-below .sharer-icon {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        width: 45px;
+        height: 45px;
+        padding: 0;
+    }
+
+    .sharers-mobile-below .sharer-icon:hover {
+        background: rgba(255, 255, 255, 1);
+        transform: scale(1.1);
+    }
+}
+
 .bg-disclaimer {
     background-color: silver;
 }
+
 .text-disclaimer {
     color: dimgray;
 }

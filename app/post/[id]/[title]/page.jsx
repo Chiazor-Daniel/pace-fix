@@ -2,7 +2,8 @@ import PostPage from "../../../../src/assets/pages/post"
 
 // Server-side metadata generation for SEO/social sharing
 export async function generateMetadata(context) {
-  const { id, title } = context.params;
+  const params = await context.params;
+  const { id, title } = params;
 
   try {
     // Fetch post data from your API

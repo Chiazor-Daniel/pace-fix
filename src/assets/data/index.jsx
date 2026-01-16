@@ -4,7 +4,7 @@ import {
   FaInstagram,
   FaWhatsapp,
   FaFacebookMessenger,
-  FaThreads
+  FaThreads,
 } from "react-icons/fa6";
 import { PiTelegramLogoBold } from "react-icons/pi";
 
@@ -85,7 +85,7 @@ shareSocials.push(
     link: "https://wa.link/oro1b3",
     name: "Telegram",
     shareLink: "tg://msg?text=",
-  }
+  },
 );
 
 export { simpleSocials, shareSocials };
@@ -100,35 +100,50 @@ export const navMenu = [
     link: "about-us",
   },
   {
-    name: "Columns",
-    links: [
-      {
-        name: "Entertainment",
-      },
-      {
-        name: "Fashion",
-      },
-      {
-        name: "Business & Economy",
-      },
-      {
-        name: "Lifestyle",
-      },
-    ],
+    name: "World News",
+    link: "category/World News",
   },
   {
-    name: "Download Magazines",
+    name: "African News",
+    link: "category/African News",
+  },
+  {
+    name: "Technology",
+    link: "category/Tech",
+  },
+  {
+    name: "Sports",
+    link: "category/Sports",
+  },
+  {
+    name: "Health",
+    link: "category/Health",
+  },
+  {
+    name: "Lifestyle",
+    link: "category/Lifestyle",
+  },
+  {
+    name: "Education",
+    link: "category/Education",
+  },
+  {
+    name: "Frontier Discourse",
+    link: "frontier-discourse",
+  },
+  {
+    name: "E-Magazine",
     links: [
       {
-        name: "Democracy Edition",
+        name: "Democracy Edition - ₦1000",
+        link: "https://paystack.com/buy/democracy-may-magazine-fbxscj",
+      },
+      {
+        name: "Xmas/New Year Edition - ₦1000",
         link: "https://paystack.com/pay/the-pacesetter-frontier-may-2023-magazine",
       },
       {
-        name: "Xmas/New Year Edition",
-        link: "https://paystack.com/pay/the-pacesetter-frontier-may-2023-magazine",
-      },
-      {
-        name: "Independence Edition",
+        name: "Independence Edition - ₦1000",
         link: "https://paystack.com/buy/independence-oct-magazine-2023-wisqga",
       },
     ],
@@ -137,7 +152,6 @@ export const navMenu = [
     name: "Policies",
     links: [{ name: "Privacy Policy" }, { name: "Terms and Conditions" }],
   },
-
 ];
 
 export const Categories = {
@@ -162,7 +176,7 @@ export const Categories = {
   972: "Press Release",
   1018: "Crime",
   1019: "African News",
-  1134: "Foreign",
+  1134: "World News",
   1142: "Tragedy",
   1169: "Legal",
   1326: "Religion",

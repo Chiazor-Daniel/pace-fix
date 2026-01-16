@@ -53,7 +53,7 @@
     "jquery": "latest",
     "lucide-react": "^0.454.0",
     "mongodb": "^6.19.0",
-    "next": "15.2.4",
+    "next": "15.2.6",
     "next-themes": "latest",
     "pg": "^8.16.3",
     "prop-types": "latest",

@@ -109,7 +109,7 @@ code {
   transition: var(--t-med);
 }
 
-.advert-img-max-height{
+.advert-img-max-height {
   max-height: 600px;
 }
 
@@ -132,9 +132,11 @@ code {
   right: 35px !important;
   z-index: 100;
 }
+
 .min-h-200 {
   min-height: 200px !important;
 }
+
 .w-30 {
   width: 30% !important;
 }
@@ -166,25 +168,32 @@ code {
 /* GENERAL FOOTER SETTINGS */
 .footer {
   background-color: var(--main-dark);
-  min-height: 90vh;
+  min-height: 40vh;
 }
+
 .credit {
   min-height: 150px;
   border-top: 1px solid #ffffff55;
 }
+
 #scroll-top {
   position: fixed;
   right: 20px;
-  bottom: 50px;
+  bottom: 80px;
+  /* Slightly higher for mobile sticky ads */
+  z-index: 9999;
 }
+
 #scroll-top:hover {
-  background-color: silver;
-  color: darkred;
+  background-color: var(--main-red);
+  color: white;
   transition: var(--t-slow);
 }
+
 .lh-2 {
   line-height: 2em;
 }
+
 .lh-5 {
   line-height: 1.5em;
 }
@@ -212,16 +221,129 @@ code {
     background-color: #ffffffdd;
     padding-top: 2.12em !important;
   }
+
   .fs-16-mobile {
     font-size: 16px !important;
   }
+
   .fs-10-mobile {
     font-size: 10px !important;
   }
+
   .fs-11-mobile {
     font-size: 11px !important;
   }
+
   .fs-12-mobile {
     font-size: 12px !important;
+  }
 }
+
+.hover-scale {
+  transition: transform 0.2s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.2);
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.hover-opacity-100:hover {
+  opacity: 1;
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+/* Reaction Styles */
+.reaction-wrapper,
+.reaction-bar,
+.reaction-small-icon {
+  user-select: none;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+}
+
+.reaction-bar {
+  position: absolute;
+  bottom: 110%;
+  left: 0;
+  display: flex;
+  z-index: 1000;
+  animation: popIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.reaction-btn:hover {
+  transform: scale(1.4);
+  background: #f0f2f5 !important;
+}
+
+.-space-x-2 {
+  display: flex;
+  align-items: center;
+}
+
+.reaction-small-icon {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 50%;
+  border: 1px solid #eee;
+  font-size: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.reaction-small-icon+.reaction-small-icon {
+  margin-left: -8px;
+}
+
+.reaction-small-icon:nth-child(1) {
+  z-index: 3;
+}
+
+.reaction-small-icon:nth-child(2) {
+  z-index: 2;
+}
+
+.reaction-small-icon:nth-child(3) {
+  z-index: 1;
+}
+
+/* Visible reaction buttons */
+.reaction-btn-visible {
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.reaction-btn-visible:not(:disabled):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.reaction-btn-visible:disabled {
+  cursor: not-allowed;
+}
+
+.reaction-btn-visible.active {
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }

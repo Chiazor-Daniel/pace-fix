@@ -1,3 +1,36 @@
+/* Double Decker Nav Styles */
+.nav-link-custom {
+  position: relative;
+  letter-spacing: 0.5px;
+  color: #555 !important;
+}
+
+.nav-link-custom:hover {
+  color: var(--main-red) !important;
+}
+
+.nav-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--main-red);
+  transition: width 0.3s ease;
+}
+
+.group:hover .nav-underline {
+  width: 100%;
+}
+
+.hover-bg-light:hover {
+  background-color: #f8f9fa;
+  color: var(--main-red) !important;
+  padding-left: 20px !important;
+  /* slide effect */
+}
+
+/* Original Styles */
 .top-bar {
   height: 45px;
   background: rgba(49, 49, 49, 1);
@@ -21,40 +54,64 @@
   font-weight: 600 !important;
 }
 
-.my-dropdowns, .my-mobile-dropdowns {
+.my-dropdowns,
+.my-mobile-dropdowns {
   position: relative;
 }
-.my-mobile-dropdowns{
+
+.my-mobile-dropdowns {
   padding: 1px 0 !important;
 }
 
 .my-dropdown-container,
 .my-mobile-dropdown-container {
-  background-color: silver;
+  background-color: #fff;
+  /* Changed from silver for cleaner look */
   position: absolute;
-  top: 18px;
-  left: 0;
+  top: 100%;
+  /* Position right below */
+  left: 50%;
+  transform: translateX(-50%);
+  /* Center dropdown */
   padding: 7px;
   display: none;
   list-style-type: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
 }
 
 .my-mobile-dropdown-container {
   position: relative;
-    display: block;
-    max-height: 0;
-    transition: max-height 0.7s ease;
-    overflow: hidden;
-    padding: 0 5px;
-    top: 10px;
+  display: block;
+  max-height: 0;
+  transition: max-height 0.7s ease;
+  overflow: hidden;
+  padding: 0 5px;
+  top: 10px;
+  left: 0;
+  transform: none;
 }
 
-.my-dropdowns:hover > .my-dropdown-container{
+.my-dropdowns:hover>.my-dropdown-container {
   display: block;
+  animation: fadeIn 0.3s ease;
 }
-.my-dropdowns:hover > .my-mobile-dropdown-container {
-    max-height: 200px;
-    transition: max-height 0.73s ease;
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.my-dropdowns:hover>.my-mobile-dropdown-container {
+  max-height: 200px;
+  transition: max-height 0.73s ease;
 }
 
 .my-dropdown-item {
@@ -64,11 +121,12 @@
   color: black;
   text-decoration: none;
   transition: var(--t-slow);
-  border-bottom: 3px solid #666;
+  border-bottom: 1px solid #eee;
+  /* Lighter border */
 }
 
 .my-dropdown-item:hover {
-  color: red;
+  color: var(--main-red);
 }
 
 .my-mobile-sidenav {

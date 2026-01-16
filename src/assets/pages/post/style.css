@@ -4,6 +4,7 @@
     object-fit: cover;
     overflow: auto;
 }
+
 .post-image-holder img {
     width: 75%;
 }
@@ -12,27 +13,119 @@
     width: 80%;
     margin: auto;
 }
+
 .sharers {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
+
 .news-holder figcaption {
     font-size: 12px;
     font-family: 'Raleway', sans-serif;
     font-weight: 600;
     text-align: center;
 }
-.news-holder figure {width: 100% !important;}
+
+.news-holder figure {
+    width: 100% !important;
+}
+
+/* Responsive iframe container - forces 16:9 aspect ratio */
+.responsive-iframe-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    margin: 3rem auto !important;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.responsive-iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
+    border-radius: 12px;
+}
+
+/* Fallback for iframes not in containers */
+.news-holder iframe,
+.news-holder video,
+.news-holder embed,
+.news-holder object {
+    max-width: 100% !important;
+    width: 100% !important;
+    display: block;
+}
+
+/* Responsive images in content */
+.news-holder img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin: 1.5rem auto;
+    border-radius: 8px;
+}
+
+/* Specific overrides for containers to ensure they don't break the framing */
+.news-holder figure,
+.news-holder .video-container {
+    width: 100% !important;
+    margin: 3.5rem 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+}
+
+/* Ensure figure images are also responsive */
+.news-holder figure img {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+}
 
 @media screen and (max-width: 700px) {
     .post-image-holder {
         min-height: initial;
     }
+
     .post-image-holder img {
         width: 100%;
     }
+
     .sharers {
         flex-direction: row;
+    }
+
+    /* Mobile social share icons - below image */
+    .sharers-mobile-below .sharers {
+        flex-direction: row !important;
+        gap: 12px;
+        margin: 0;
+        justify-content: center;
+    }
+
+    /* Force horizontal layout - override flex-column */
+    .sharers-mobile-below>div {
+        flex-direction: row !important;
+    }
+
+    .post-image-wrapper {
+        margin-bottom: 2rem;
+    }
+
+    /* Ensure videos don't overflow on mobile */
+    .news-holder iframe,
+    .news-holder video {
+        max-width: 100% !important;
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9;
     }
 }

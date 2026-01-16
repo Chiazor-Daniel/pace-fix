@@ -3,9 +3,9 @@
 import { useEffect, useState, useRef } from 'react';
 
 // Custom Ad Component that displays client's own ads
-const CustomAdComponent = ({ 
-  positionKey, 
-  className = "", 
+const CustomAdComponent = ({
+  positionKey,
+  className = "",
   style = {},
   pageType = 'all',
   pageUrl = ''
@@ -79,8 +79,8 @@ const CustomAdComponent = ({
         return (
           <div className="custom-banner-ad">
             <a href={adData.content.linkUrl} target="_blank" rel="noopener noreferrer">
-              <img 
-                src={adData.content.imageUrl} 
+              <img
+                src={adData.content.imageUrl}
                 alt={adData.content.altText}
                 className="img-fluid w-100"
                 style={{ maxHeight: '300px', objectFit: 'cover' }}
@@ -88,166 +88,162 @@ const CustomAdComponent = ({
             </a>
           </div>
         );
-      
+
       case 'text':
         return (
           <div className="custom-text-ad p-3 border rounded" style={{ backgroundColor: '#f8f9fa' }}>
             <h5 className="mb-2">{adData.content.title}</h5>
             <p className="mb-3 text-muted">{adData.content.description}</p>
-            <a 
-              href={adData.content.linkUrl} 
+            <a
+              href={adData.content.linkUrl}
               className="btn btn-primary btn-sm"
-              target="_blank" 
+              target="_blank"
               rel="noopener noreferrer"
             >
               {adData.content.buttonText || 'Learn More'}
             </a>
           </div>
         );
-      
+
       case 'html':
         return (
-          <div 
+          <div
             className="custom-html-ad"
             dangerouslySetInnerHTML={{ __html: adData.content.html }}
           />
         );
-      
+
       default:
         return null;
     }
   };
 
   return (
-    <div 
-      className={`custom-ad-container ${className}`} 
+    <div
+      className={`custom-ad-container ${className}`}
       style={style}
       data-ad-position={positionKey}
       data-ad-id={adData._id}
     >
       {renderAdContent()}
-      
-      {/* Ad debug info for admin */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="ad-debug-info" style={{ 
-          fontSize: '10px', 
-          color: '#666', 
-          marginTop: '5px',
-          padding: '2px 5px',
-          backgroundColor: '#f8f9fa',
-          borderRadius: '3px'
-        }}>
-          Custom Ad: {adData.title} | Position: {positionKey} | Active: {adData.isActive ? 'Yes' : 'No'}
-        </div>
-      )}
+
+      {/* Ad debug info for client verification */}
+      <div className="ad-debug-info opacity-50 hover-opacity-100 transition-all" style={{
+        fontSize: '9px',
+        color: '#999',
+        marginTop: '2px',
+        textAlign: 'right'
+      }}>
+        Ad ID: {positionKey}
+      </div>
     </div>
   );
 };
 
 // Pre-configured custom ad components for different positions
 export const HeaderBannerCustomAd = ({ className, style }) => (
-  <CustomAdComponent 
-    positionKey="header_banner" 
-    className={className} 
+  <CustomAdComponent
+    positionKey="header_banner"
+    className={className}
     style={style}
     pageType="all"
   />
 );
 
 export const SidebarTopCustomAd = ({ className, style }) => (
-  <CustomAdComponent 
-    positionKey="sidebar_top" 
-    className={className} 
+  <CustomAdComponent
+    positionKey="sidebar_top"
+    className={className}
     style={style}
     pageType="post"
   />
 );
 
 export const SidebarMiddleCustomAd = ({ className, style }) => (
-  <CustomAdComponent 
-    positionKey="sidebar_middle" 
-    className={className} 
+  <CustomAdComponent
+    positionKey="sidebar_middle"
+    className={className}
     style={style}
     pageType="post"
   />
 );
 
 export const SidebarBottomCustomAd = ({ className, style }) => (
-  <CustomAdComponent 
-    positionKey="sidebar_bottom" 
-    className={className} 
+  <CustomAdComponent
+    positionKey="sidebar_bottom"
+    className={className}
     style={style}
     pageType="post"
   />
 );
 
 export const BelowTitleCustomAd = ({ className, style }) => (
-  <CustomAdComponent 
-    positionKey="below_title" 
-    className={className} 
+  <CustomAdComponent
+    positionKey="below_title"
+    className={className}
     style={style}
     pageType="post"
   />
 );
 
 export const InContentCustomAd = ({ className, style }) => (
-  <CustomAdComponent 
-    positionKey="in_content" 
-    className={className} 
+  <CustomAdComponent
+    positionKey="in_content"
+    className={className}
     style={style}
     pageType="post"
   />
 );
 
 export const EndOfArticleCustomAd = ({ className, style }) => (
-  <CustomAdComponent 
-    positionKey="end_of_article" 
-    className={className} 
+  <CustomAdComponent
+    positionKey="end_of_article"
+    className={className}
     style={style}
     pageType="post"
   />
 );
 
 export const MobileStickyFooterCustomAd = ({ className, style }) => (
-  <CustomAdComponent 
-    positionKey="mobile_sticky_footer" 
-    className={className} 
+  <CustomAdComponent
+    positionKey="mobile_sticky_footer"
+    className={className}
     style={style}
     pageType="all"
   />
 );
 
 export const HomeHeroCustomAd = ({ className, style }) => (
-  <CustomAdComponent 
-    positionKey="home_hero" 
-    className={className} 
+  <CustomAdComponent
+    positionKey="home_hero"
+    className={className}
     style={style}
     pageType="home"
   />
 );
 
 export const HomeSidebarCustomAd = ({ className, style }) => (
-  <CustomAdComponent 
-    positionKey="home_sidebar" 
-    className={className} 
+  <CustomAdComponent
+    positionKey="home_sidebar"
+    className={className}
     style={style}
     pageType="home"
   />
 );
 
 export const CategoryHeaderCustomAd = ({ className, style }) => (
-  <CustomAdComponent 
-    positionKey="category_header" 
-    className={className} 
+  <CustomAdComponent
+    positionKey="category_header"
+    className={className}
     style={style}
     pageType="category"
   />
 );
 
 export const SearchResultsCustomAd = ({ className, style }) => (
-  <CustomAdComponent 
-    positionKey="search_results" 
-    className={className} 
+  <CustomAdComponent
+    positionKey="search_results"
+    className={className}
     style={style}
     pageType="search"
   />
@@ -255,9 +251,9 @@ export const SearchResultsCustomAd = ({ className, style }) => (
 
 // Generic custom ad component for custom positions
 export const CustomAd = ({ positionKey, className, style, pageType = 'all' }) => (
-  <CustomAdComponent 
-    positionKey={positionKey} 
-    className={className} 
+  <CustomAdComponent
+    positionKey={positionKey}
+    className={className}
     style={style}
     pageType={pageType}
   />
