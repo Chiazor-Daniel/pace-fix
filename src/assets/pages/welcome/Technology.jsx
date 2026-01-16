@@ -5,7 +5,7 @@ import { Common } from "../../components"
 const Technology = (props) => {
   return (
     <>
-      <Common {...props} name="Technology" start={0} />
+      <Common {...props} name="Tech" start={0} />
     </>
   )
 }

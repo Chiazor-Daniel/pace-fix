@@ -65,6 +65,15 @@
     display: block;
 }
 
+/* Responsive images in content */
+.news-holder img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin: 1.5rem auto;
+    border-radius: 8px;
+}
+
 /* Specific overrides for containers to ensure they don't break the framing */
 .news-holder figure,
 .news-holder .video-container {
@@ -72,6 +81,13 @@
     margin: 3.5rem 0 !important;
     padding: 0 !important;
     overflow: visible !important;
+}
+
+/* Ensure figure images are also responsive */
+.news-holder figure img {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
 }
 
 @media screen and (max-width: 700px) {
