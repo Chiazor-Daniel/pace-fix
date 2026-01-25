@@ -65,13 +65,31 @@
     display: block;
 }
 
-/* Responsive images in content */
-.news-holder img {
+/* Responsive images and media in content */
+.news-holder img,
+.news-holder figure,
+.news-holder video {
     max-width: 100% !important;
     height: auto !important;
     display: block;
     margin: 1.5rem auto;
     border-radius: 8px;
+}
+
+/* Force all elements inside news-holder to be responsive */
+.news-holder * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+}
+
+/* Handle tables which often break layouts */
+.news-holder table {
+    width: 100% !important;
+    display: block !important;
+    overflow-x: auto !important;
+    border-collapse: collapse;
 }
 
 /* Specific overrides for containers to ensure they don't break the framing */
@@ -83,12 +101,16 @@
     overflow: visible !important;
 }
 
-/* Ensure figure images are also responsive */
+/* Ensure images inside any container remain fluid */
+.news-holder div img,
+.news-holder p img,
 .news-holder figure img {
     max-width: 100% !important;
-    width: 100% !important;
+    width: auto !important;
+    /* Allow natural width up to 100% */
     height: auto !important;
 }
+
 
 @media screen and (max-width: 700px) {
     .post-image-holder {
